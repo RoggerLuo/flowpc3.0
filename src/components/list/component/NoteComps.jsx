@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-//    border:0.5px solid #ccc;
 
 const Content = styled.div`
     border-radius: 5px;
@@ -11,14 +10,13 @@ const Content = styled.div`
     margin-bottom:10px;
     background-color:white;
 `
-export function NoteContent({ itemId, content, select }){
+export function NoteContent({ id, content, select }){
     return (
         <div onClick={select}>
             <Content>{content}</Content>
         </div>
     )
 }
-
 export function NoteWrapper({ isSelected, children }){
     let style = { cursor:'pointer' }
     let _class = ""
@@ -32,11 +30,3 @@ export function NoteWrapper({ isSelected, children }){
       </div>
     )
 }
-//          <div style={{widht:'100%',height:'1px',borderTop:'0.5px solid #ccc'}}></div>
-
-    // return (
-    //     <Card>
-    //         <div>{content}</div>
-    //     </Card>
-    // )
-

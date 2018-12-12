@@ -9,7 +9,7 @@ import App from './App'
 import model from './model'
 Model.create(model)
 const fetch = Fetch({ 
-    baseUrl: 'http://47.75.9.249:5555', 
+    baseUrl: 'http://0.0.0.0:5556',
     headers: {
         "Content-Type": "application/json",
     },

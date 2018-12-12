@@ -5,6 +5,13 @@ export default {
     state: {
         notes: [],
         index: 0,
+        loading:false,
+        hasMore:true,
+        query:{
+            pageNum: 1,
+            pageSize: 15,
+            category:0
+        }
     },
     reducers: {
         fetch(state,{ notes }) {
@@ -52,6 +59,7 @@ export default {
     },
     effects: {
         * fetchNotes({ fetch, put },{ cb }) {
+            return 
             const rawNotes = yield fetch(`notes`)
             const notes = rawNotes.map(entry => {
                 const itemId = entry[1]
