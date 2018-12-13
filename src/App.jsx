@@ -3,6 +3,8 @@ import './global.css'
 import styled from 'styled-components'
 import { Menu } from 'antd'
 import IndexPage from './pages/indexpage'
+import CategoryPage from './pages/category'
+
 const Header = styled.div`
     width:100%;
     height:41px;
@@ -43,8 +45,12 @@ class MenuTab extends React.Component {
                     </Menu.Item>
                 </Menu>
             </Header>
-            
-            <IndexPage/>
+            {(()=>{
+                if(this.state.current==='category') {
+                    return <CategoryPage/>
+                }
+                return <IndexPage/>
+            })()}
         </div>
     )
   }

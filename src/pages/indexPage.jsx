@@ -2,7 +2,7 @@ import React from 'react'
 import List,{ initListData, listAdd, listModify, listRemove } from 'components/list'
 import Editor from 'components/editor'
 import styled from 'styled-components'
-
+import {Model} from 'dvax'
 const ItemWrap = styled.div`
     padding:5px 5px;
     width:50%;
@@ -44,6 +44,10 @@ class App extends React.Component {
         }
     }
     componentDidMount(){
+        Model.run('category',function*({fetch,change}){
+            const res = yield fetch(`categories`)
+            yield change('list',res.data)
+        })
         initListData((notes)=>{
             if (notes[0]) {
                 this.interfaces.replace(notes[0])
@@ -61,43 +65,17 @@ class App extends React.Component {
         return (
             <Body>
                 <div style={{flex:1,padding:'5px 5px',borderRight:'1px solid #ccc'}}>
-                    <ItemWrap>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{'data.name'}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
-                    <ItemWrap>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{'data.name'}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
-
-                    <ItemWrap>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{'data.name'}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
-                    
-                    <ItemWrap>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{'data.name'}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
-                    <ItemWrap>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{'data.name'}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
+                    {this.props.list.map((el,ind)=>{
+                        return (
+                            <ItemWrap>
+                                <Item onClick={()=>{}}>
+                                    <ItemText>
+                                        <div>{el.name}</div>
+                                    </ItemText>
+                                </Item>
+                            </ItemWrap>
+                        )
+                    })}
                 </div>
                 
                 <div style={{flex:1,borderRight:'1px solid #ccc'}}>
@@ -112,7 +90,7 @@ class App extends React.Component {
         )
     }
 }
-export default App
+export default Model.connect('category')(App)
 
 
 // this.replaceHandler = (replacer) => {

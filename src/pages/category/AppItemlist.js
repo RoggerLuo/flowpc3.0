@@ -1,9 +1,7 @@
-import { Input, Button, Popconfirm, Form ,Icon,InputNumber,Modal} from 'antd';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
-import React from 'react';
-import appList from '../../models/appList'
-import Lists from '../../components/Lists'
+import { Button, Modal} from 'antd'
+import { connect } from 'dvax'
+import React from 'react'
+import Lists from './Lists'
 
 class AppItemlist extends React.Component {
   state = {

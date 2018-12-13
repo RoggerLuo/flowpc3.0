@@ -1,6 +1,7 @@
+import React from 'react'
 import { Model } from 'dvax'
-import { message, Row, Col, } from 'antd'
-import  EditableTable from './AppCategory'
+import { Row, Col, } from 'antd'
+import  EditableTable from './EditableTable'
 import AddNewCategory from './AddNewCategory'
 import styled from 'styled-components'
 const Body = styled.div`
@@ -10,12 +11,9 @@ const Body = styled.div`
     top:41px;
     bottom:0px;
     overflow-y:auto;
-    display:flex;
 `
+Model.create({namespace:'category',state:{list:[]} })
 function AppAdmin({ list }) {
-    createAdmin = () => {
-        Model.dispatch({type:'category/loadCategory'})
-    }
     return (
         <Body>
             <div style={{height:'15px',width:'1px'}}></div>
