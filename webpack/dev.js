@@ -43,12 +43,12 @@ function dev(basic) {
         hot: true,
         host: "localhost"
     }
-    basic.devServer.proxy = {
-        '/': {
-            target: 'http://172.16.1.182:8000/v2/',
-            changeOrigin: true
-        }
-    }
+    // basic.devServer.proxy = {
+    //     '/': {
+    //         target: 'http://172.16.1.182:8000/v2/',
+    //         changeOrigin: true
+    //     }
+    // }
     return basic
 }
 

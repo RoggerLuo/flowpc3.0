@@ -11,18 +11,8 @@ class EditableTable extends React.Component {
     }
   constructor(props) {
         super(props);   
-        this.onDelete=this.onDelete.bind(this)
-        this.onBlur=this.onBlur.bind(this)
         this.columns = columns
    }  
-   onBlur(categoryId){
-     const order=event.target.defaultValue
-     Model.dispatch({type:'category/cateorder',_id:categoryId,orderIndex:order})
-     Model.dispatch({type:'category/editorderIndex',_id:categoryId,orderIndex:order})
-   }
-   onDelete(_id){
-    Model.dispatch({type:'category/deletecates',_id:_id})
-  }
   render() {
     const { dataSource } = this.props
     const columns = this.columns;

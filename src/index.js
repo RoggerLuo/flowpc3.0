@@ -11,10 +11,16 @@ Model.create(model)
 const fetch = Fetch({ 
     baseUrl: 'http://0.0.0.0:5556',
     headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/x-www-form-urlencoded", // 经常不用写,直接用FormData
     },
     requestBody(body){
-        return JSON.stringify(body)
+        const postdata = new FormData()
+        for (let k in body) {
+            if (body.hasOwnProperty(k)) {
+                postdata.append(k, body[k])
+            }
+        }
+        return postdata
     },
     receiveData(res){
         if(res.hasErrors) {

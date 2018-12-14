@@ -17,7 +17,7 @@ const FormComp = ({handleSubmit,form,isLoading})=>{
                             {getFieldDecorator('name', {
                             })(
                                 <Input />
-                                )}                                                   
+                            )}                                                   
                         </Col>
                         <Col span={2} offset={1}>
                                 <Button onClick={click} loading={isLoading} type="primary" size="large">创建目录</Button>

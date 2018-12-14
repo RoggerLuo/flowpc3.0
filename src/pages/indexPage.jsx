@@ -67,7 +67,7 @@ class App extends React.Component {
                 <div style={{flex:1,padding:'5px 5px',borderRight:'1px solid #ccc'}}>
                     {this.props.list.map((el,ind)=>{
                         return (
-                            <ItemWrap>
+                            <ItemWrap key={ind}>
                                 <Item onClick={()=>{}}>
                                     <ItemText>
                                         <div>{el.name}</div>
