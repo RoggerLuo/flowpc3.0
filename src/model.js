@@ -3,6 +3,7 @@
 
 export default {
     namespace: 'app',
+    selectedNoteIdx:null,
     state: {
         showSearchPanel: false,
         content: '',

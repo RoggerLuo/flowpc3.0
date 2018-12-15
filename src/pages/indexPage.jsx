@@ -35,6 +35,55 @@ const Body = styled.div`
     overflow-y:auto;
     display:flex;
 `
+const DeleteWrapper = styled.div`
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 33%;
+    height: 75px;
+    display:flex;
+`
+const Delete = styled.div`
+    color:white;
+    background-color:red;
+    border-radius:15px;
+    width:90%;
+    height:55px;
+    margin:0 auto auto auto; 
+    line-height:55px;
+    text-align:center;
+    font-size:16px;
+`
+function DeleteButton(){
+    
+    return (
+        <DeleteWrapper>
+            <Delete>删 除</Delete>
+        </DeleteWrapper>
+    )
+}
+
+function Category({list}){
+    const style = { padding:'5px 5px', height:'100%' }
+    
+    style.backgroundColor = '#c5dcff'
+    return (
+        <div style={style}>
+            {list.map((el,ind)=>{
+                return (
+                    <ItemWrap key={ind}>
+                        <Item onClick={()=>{}}>
+                            <ItemText>
+                                <div>{el.name}</div>
+                            </ItemText>
+                        </Item>
+                    </ItemWrap>
+                )
+            }
+        )}
+    </div>)
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -64,18 +113,8 @@ class App extends React.Component {
         } 
         return (
             <Body>
-                <div style={{flex:1,padding:'5px 5px',borderRight:'1px solid #ccc'}}>
-                    {this.props.list.map((el,ind)=>{
-                        return (
-                            <ItemWrap key={ind}>
-                                <Item onClick={()=>{}}>
-                                    <ItemText>
-                                        <div>{el.name}</div>
-                                    </ItemText>
-                                </Item>
-                            </ItemWrap>
-                        )
-                    })}
+                <div style={{flex:1,borderRight:'1px solid #ccc'}}>
+                    <Category list={this.props.list}/>
                 </div>
                 
                 <div style={{flex:1,borderRight:'1px solid #ccc'}}>
@@ -84,23 +123,10 @@ class App extends React.Component {
                 
                 <div style={{flex:1}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
+                    <DeleteButton/>
                 </div>
-
             </Body>
         )
     }
 }
 export default Model.connect('category')(App)
-
-
-// this.replaceHandler = (replacer) => {
-//     bridge.replacer = replacer
-// }
-// this.bridge = bridge
-// this.onNewNote = listAdd
-// this.onSaveNote = listModify
-// this.onDelete = listRemove
-// replaceHandler={this.replaceHandler} 
-// onNewNote={this.onNewNote} 
-// onSaveNote={this.onSaveNote}
-// onDelete={this.onDelete}

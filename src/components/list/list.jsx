@@ -1,6 +1,6 @@
 import React from 'react'
 import { Model } from 'dvax'
-import Note from './NoteContainer'
+import Note from './note'
 import styled from 'styled-components'
 const Container = styled.div`
     border-right: 1px solid #e8e8e8;
@@ -25,6 +25,7 @@ const LoadingContainer = styled.div`
 `
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
+
 class InfiniteListExample extends React.Component {
     state = {}
     componentDidMount = () => {
@@ -59,9 +60,8 @@ class InfiniteListExample extends React.Component {
                     {this.props.notes.map((note,index) => <Note {...this.props} index={index} note={note} key={index}/>) }
                 </InfiniteScroll>
                 {this.props.loading && this.props.hasMore && (<LoadingContainer><Spin/></LoadingContainer>)}
-
             </Container>
         )
     }
 }
-export default Model.connect('list')(InfiniteListExample)
+export default Model.connect('app')(Model.connect('list')(InfiniteListExample))

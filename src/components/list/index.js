@@ -1,8 +1,12 @@
 import {Model} from 'dvax'
 import model from './model'
-import component from './component'
+
+import component from './list'
+
 Model.create(model)
+
 export default component
+
 export function initListData(cb) {
     Model.dispatch({ type: 'list/fetchNotes', cb })
 }

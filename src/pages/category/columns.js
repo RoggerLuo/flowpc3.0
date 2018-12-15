@@ -1,19 +1,21 @@
-import { Popconfirm,Input} from 'antd'
+import { Popconfirm, Input } from 'antd'
 import React from 'react'
 import AppItemlist from './AppItemlist'
 import {Model} from 'dvax'
+import debounce from 'dvax/debounce' 
+const save = (name,id) => {
+    Model.run('',function*({fetch}){
+        const res = fetch(`category/${id}`,{method:'post',body:{name}})
+    })
+}
+const onChange = debounce(save,1000)
 const columns = [
     {
         title: '类别名称',
         dataIndex: 'name',
         width: '20%',     
         render: (text, record) => {
-            const onBlur = (name,id) => {
-                Model.run('',function*({fetch}){
-                    const res = fetch(`category/${id}`,{method:'post',body:{name}})
-                })
-            }
-            return(<Input defaultValue={record.name} onBlur={e=>onBlur(e.target.value,record.id)}/>)
+            return(<Input defaultValue={record.name} onChange={e=>onChange(e.target.value,record.id)}/>)
         }
     }, 
     {
