@@ -3,8 +3,8 @@
 
 export default {
     namespace: 'app',
-    selectedNoteIdx:null,
     state: {
+        selectedNoteIdx:null,
         showSearchPanel: false,
         content: '',
     },

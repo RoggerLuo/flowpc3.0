@@ -29,23 +29,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 class InfiniteListExample extends React.Component {
     state = {}
     componentDidMount = () => {
-        this.getData()
-    }
-    getData = () => {
-        Model.run('list',function*({ fetch, change, get }) {
-            const query = {...get().query}
-            yield change('loading',true)
-            const res = yield fetch(`notes`,{query})
-            if(res.hasErrors) return
-            const notes = res.data
-            yield change('notes',[...get().notes,...notes])
-            yield change('loading',false)
-            query.pageNum += 1
-            yield change('query',query)
-            if(notes.length < query.pageSize) {
-                yield change('hasMore',false)
-            }
-        })
+        Model.dispatch({type:'list/getData'})
     }
     render() {
         return (
@@ -53,7 +37,7 @@ class InfiniteListExample extends React.Component {
                 <InfiniteScroll
                     initialLoad={false}
                     pageStart={0}
-                    loadMore={this.getData}
+                    loadMore={()=>Model.dispatch({type:'list/loadMore'})}
                     hasMore={!this.props.loading && this.props.hasMore}
                     useWindow={false}
                 >
@@ -64,4 +48,4 @@ class InfiniteListExample extends React.Component {
         )
     }
 }
-export default Model.connect('app')(Model.connect('list')(InfiniteListExample))
+export default Model.connect(['app','list'])(InfiniteListExample)

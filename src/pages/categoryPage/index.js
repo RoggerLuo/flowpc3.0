@@ -14,7 +14,10 @@ const Body = styled.div`
 `
 Model.create({
     namespace:'category',
-    state:{list:[]},
+    state:{
+        list:[],
+        selectedCategory:{},
+    },
     effects:{
         *create({fetch,get,change},{name}){
             const res = yield fetch(`category`,{method:'post',body:{name}})

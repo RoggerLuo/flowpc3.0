@@ -44,7 +44,7 @@
   "dependencies": {
     "antd": "^3.10.9",
     "draft-js": "^0.10.5",
-    "dvax": "^0.1.47",
+    "dvax": "^0.1.50",
     "es6-promise": "^4.2.4",
     "immutable": "^3.8.2",
     "invariant": "^2.2.4",

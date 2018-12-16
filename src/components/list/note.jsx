@@ -26,8 +26,9 @@ const ContentBlue = styled.div`
 function Note({ onSelect, index, selectedNoteIdx, note }){
     const isSelected = index === selectedNoteIdx
     const select = e => {
-        if(isSelected) return // #1890ff
+        //if(isSelected) return // #1890ff
         Model.dispatch({ type: 'list/select', index })
+        Model.change('app','selectedNoteIdx',null)
         onSelect(note)
     }
     function onDoubleClick(){

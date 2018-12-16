@@ -10,7 +10,7 @@ export default {
         query:{
             pageNum: 1,
             pageSize: 15,
-            category:0
+            categoryId:0
         }
     },
     reducers: {
@@ -58,22 +58,35 @@ export default {
         }
     },
     effects: {
-        * fetchNotes({ fetch, put },{ cb }) {
-            return 
-            const rawNotes = yield fetch(`notes`)
-            const notes = rawNotes.map(entry => {
-                const itemId = entry[1]
-                const content = entry[2]
-                const wordList = entry[3]
-                const modifiedTime = entry[4]
-                return { itemId, content, wordList, modifiedTime }
-            })
-            if (notes.length > 0) {
-                const note = notes[0]
-                invariant(note.hasOwnProperty('itemId') && note.hasOwnProperty('content') && note.hasOwnProperty('wordList'), 'notes格式不对')
+        * getData({ fetch, change, get }){
+            const query = {...get().query}
+            query.pageNum = 1
+            yield change('query',query)    
+            yield change('loading',true)
+            const res = yield fetch(`notes`,{query})
+            if(res.hasErrors) return
+            const notes = res.data
+            yield change('notes',notes)
+            yield change('loading',false)
+            if(notes.length < query.pageSize) {
+                yield change('hasMore',false)
             }
-            yield put({ type: 'fetch', notes })
-            cb(notes)
+        },
+        * loadMore({change,fetch,get}){
+            const query = {...get().query}
+            query.pageNum += 1
+            yield change('query',query)    
+            
+            yield change('loading',true)
+            const res = yield fetch(`notes`,{query})
+            if(res.hasErrors) return
+            const notes = res.data
+            yield change('notes',[...get().notes,...notes])
+            yield change('loading',false)
+            if(notes.length < query.pageSize) {
+                yield change('hasMore',false)
+            }
+
         },
         * deleteNote({ fetch, call, put },{ id }) {
             yield call(fetch, `note/${id}`, { method: 'delete' })

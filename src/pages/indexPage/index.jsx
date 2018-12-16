@@ -1,31 +1,9 @@
 import React from 'react'
-import List,{ initListData, listAdd, listModify, listRemove } from 'components/list'
+import List,{ initListData } from 'components/list'
 import Editor from 'components/editor'
 import styled from 'styled-components'
 import {Model} from 'dvax'
-const ItemWrap = styled.div`
-    padding:5px 5px;
-    width:50%;
-    float:left;
-`
-const Item = styled.div`
-    height: 100px;
-    width: 100%;
-    border-radius: 5px;
-    display: flex;
-    text-align: center;
-    background-color: white;
-    cursor: pointer;
-    color: black;
-    font-size: 14px;
-    color: #5d5d5d;
-`
-const ItemText  = styled.div`
-    max-width: 150px;
-    display: inline-block;
-    margin:auto;
-    word-break: break-all;
-`
+import Category from './category'
 const Body = styled.div`
     width:100%;
     background-color:#f5f5f5;
@@ -54,43 +32,22 @@ const Delete = styled.div`
     text-align:center;
     font-size:16px;
 `
-function DeleteButton(){
-    
-    return (
-        <DeleteWrapper>
-            <Delete>删 除</Delete>
-        </DeleteWrapper>
-    )
-}
-
-function Category({list}){
-    const style = { padding:'5px 5px', height:'100%' }
-    
-    style.backgroundColor = '#c5dcff'
-    return (
-        <div style={style}>
-            {list.map((el,ind)=>{
-                return (
-                    <ItemWrap key={ind}>
-                        <Item onClick={()=>{}}>
-                            <ItemText>
-                                <div>{el.name}</div>
-                            </ItemText>
-                        </Item>
-                    </ItemWrap>
-                )
-            }
-        )}
-    </div>)
+function DeleteButton({selectedNoteIdx}){
+    if(selectedNoteIdx!==null) {
+        return (
+            <DeleteWrapper>
+                <Delete>删 除</Delete>
+            </DeleteWrapper>
+        )    
+    }
+    return null    
 }
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.interfaces = {}
-        this.onSelect = (selectedNote) => {
-            this.interfaces.replace(selectedNote)
-        }
+        this.onSelect = (selectedNote) => this.interfaces.replace(selectedNote)
     }
     componentDidMount(){
         Model.run('category',function*({fetch,change}){
@@ -110,11 +67,11 @@ class App extends React.Component {
                     obj[key] = subObj[key]    
                 })
             }
-        } 
+        }
         return (
             <Body>
                 <div style={{flex:1,borderRight:'1px solid #ccc'}}>
-                    <Category list={this.props.list}/>
+                    <Category {...this.props}/>
                 </div>
                 
                 <div style={{flex:1,borderRight:'1px solid #ccc'}}>
@@ -123,10 +80,10 @@ class App extends React.Component {
                 
                 <div style={{flex:1}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
-                    <DeleteButton/>
+                    <DeleteButton {...this.props}/>
                 </div>
             </Body>
         )
     }
 }
-export default Model.connect('category')(App)
+export default Model.connect(['category','app'])(App)

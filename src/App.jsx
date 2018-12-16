@@ -2,18 +2,20 @@ import React from 'react'
 import './global.css'
 import styled from 'styled-components'
 import { Menu } from 'antd'
-import IndexPage from './pages/indexpage'
-import CategoryPage from './pages/category'
+import { Model } from 'dvax'
+import IndexPage from './pages/indexPage'
+import CategoryPage from './pages/categoryPage'
 const Header = styled.div`
     width:100%;
     height:41px;
     line-height:40px;
-    text-align:center;
+    text-align:left;
     border-bottom:1px solid #ccc;
     position:absolute;
     top:0;
+    display:flex;
 `
-class MenuTab extends React.Component {
+class App extends React.Component {
     state = {current: 'index'}
     handleClick = (e) => {
         console.log('click ', e);
@@ -21,24 +23,32 @@ class MenuTab extends React.Component {
     }
     render() {
         return (
-            <div style={{height:'100%'}}>
+            <div style={{height:'100%',justifyContent: 'space-between',display:'flex'}}>
                 <Header>
-                    <Menu
-                        style={{lineHeight:'38px'}}
-                        onClick={this.handleClick}
-                        selectedKeys={[this.state.current]}
-                        mode="horizontal"
-                    >
-                        <Menu.Item key="category">
-                            &nbsp;分类&nbsp;
-                        </Menu.Item>
-                        <Menu.Item key="index">
-                            &nbsp;首页&nbsp; 
-                        </Menu.Item>
-                        <Menu.Item key="edit">
-                            &nbsp;编辑&nbsp;
-                        </Menu.Item>
-                    </Menu>
+                    <div style={{flex:1}}>
+                        <Menu
+                            style={{lineHeight:'38px'}}
+                            onClick={this.handleClick}
+                            selectedKeys={[this.state.current]}
+                            mode="horizontal"
+                        >
+                            <Menu.Item key="index">
+                                &nbsp;笔记&nbsp; 
+                            </Menu.Item>
+                            <Menu.Item key="category">
+                                &nbsp;分类&nbsp;
+                            </Menu.Item>
+
+                        </Menu>
+
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{paddingLeft:'16px',fontWeight:500}}>
+                            {this.props.selectedCategory.name||'Uncategorized'}
+                        </div>
+                    </div>
+                    <div style={{flex:1}}>
+                    </div>
                 </Header>
                 {(()=>{
                     if(this.state.current==='category') {
@@ -50,4 +60,4 @@ class MenuTab extends React.Component {
         )
     }
 }
-export default MenuTab
+export default Model.connect('category')(App)
