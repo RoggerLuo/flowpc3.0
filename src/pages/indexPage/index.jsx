@@ -1,6 +1,6 @@
 import React from 'react'
-import List,{ initListData } from 'components/list'
-import Editor from 'components/editor'
+import List from 'components/list'
+import Editor,{operations} from 'components/editor'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
@@ -47,18 +47,18 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.interfaces = {}
-        this.onSelect = (selectedNote) => this.interfaces.replace(selectedNote)
+        this.onSelect = selectedNote => this.interfaces.replace(selectedNote)
     }
     componentDidMount(){
         Model.run('category',function*({fetch,change}){
             const res = yield fetch(`categories`)
             yield change('list',res.data)
         })
-        initListData((notes)=>{
+        Model.dispatch({type:'list/getData',callback:(notes)=>{
             if (notes[0]) {
                 this.interfaces.replace(notes[0])
             }
-        })
+        }})
     }
     render(){
         const Deliver = (obj) => {

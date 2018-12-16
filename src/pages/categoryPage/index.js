@@ -16,7 +16,7 @@ Model.create({
     namespace:'category',
     state:{
         list:[],
-        selectedCategory:{},
+        selectedCategory:{id:'all'},
     },
     effects:{
         *create({fetch,get,change},{name}){

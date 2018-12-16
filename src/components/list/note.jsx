@@ -23,24 +23,38 @@ const ContentBlue = styled.div`
     background-color:#1890ff;
     color:white;
 `
-function Note({ onSelect, index, selectedNoteIdx, note }){
+function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
+
     const isSelected = index === selectedNoteIdx
+    const isEditing = index === editingNoteIndex
     const select = e => {
         //if(isSelected) return // #1890ff
-        Model.dispatch({ type: 'list/select', index })
+        Model.dispatch({ type: 'list/select', editingNoteIndex:index })
         Model.change('app','selectedNoteIdx',null)
         onSelect(note)
     }
     function onDoubleClick(){
         Model.change('app','selectedNoteIdx',index)
     }
+    if(isSelected) {
+        return (
+            <div onClick={select} onDoubleClick={onDoubleClick}>
+                <ContentBlue>{note.content}</ContentBlue>
+            </div>
+        )    
+    }
+    if(isEditing) {
+        return (
+            <div onClick={select} onDoubleClick={onDoubleClick}>
+                <Content style={{backgroundColor:'lightgrey'}}>{note.content}</Content>
+            </div>
+        )    
+    }
     return (
         <div onClick={select} onDoubleClick={onDoubleClick}>
-            {isSelected?
-                <ContentBlue>{note.content}</ContentBlue>:
-                <Content>{note.content}</Content>
-            }            
+            <Content>{note.content}</Content>
         </div>
-    )
+    )    
+
 }
 export default Note

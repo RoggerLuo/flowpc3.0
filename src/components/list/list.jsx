@@ -28,9 +28,6 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 class InfiniteListExample extends React.Component {
     state = {}
-    componentDidMount = () => {
-        Model.dispatch({type:'list/getData'})
-    }
     render() {
         return (
             <Container>

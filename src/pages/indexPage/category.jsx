@@ -25,31 +25,47 @@ const ItemText  = styled.div`
     margin:auto;
     word-break: break-all;
 `
-
-function Category({ list, selectedNoteIdx }){
+function Category({ list, selectedNoteIdx, selectedCategory }){
     const style = { padding:'5px 5px', height:'100%' }
     if(selectedNoteIdx!==null) {
         style.backgroundColor = '#1990fe'
     }
     const onClick = category => {
-        if(selectedNoteIdx!==null) {
+        if(selectedNoteIdx!==null) { // 分类note到category
             Model.run('app',function*({fetch,get,change}){
+
                 const note = get('list').notes[selectedNoteIdx]
                 const res = yield fetch(`classify/${note.id}/${category.id}`)
                 if(res.hasErrors) return
+                const notes = get('list').notes.slice()
+                notes.splice(selectedNoteIdx,1)
                 yield change('selectedNoteIdx',null)
                 message.success('分类成功')
+                Model.change('list','notes',notes)
+
             })
-        }else{
+        }else{ // 查看分类下的文章
             Model.change('category','selectedCategory',category)
             Model.change('list','query.categoryId',category.id)
             Model.dispatch({type:'list/getData'})
         }
     }
-    const categoryList = [...list,{name:'Uncategorized',id:0}]
+    const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
     return (
         <div style={style}>
             {categoryList.map((el,ind)=>{
+
+                if(selectedCategory.id === el.id && selectedNoteIdx===null) {
+                    return (
+                        <ItemWrap key={ind}>
+                            <Item onClick={()=>onClick(el)} style={{backgroundColor:'lightgrey'}}>
+                                <ItemText>
+                                    <div>{el.name}</div>
+                                </ItemText>
+                            </Item>
+                        </ItemWrap>
+                    )    
+                }
                 return (
                     <ItemWrap key={ind}>
                         <Item onClick={()=>onClick(el)}>
@@ -63,5 +79,4 @@ function Category({ list, selectedNoteIdx }){
         )}
     </div>)
 }
-
 export default Category

@@ -1,7 +1,8 @@
 import React from 'react'
-import dva,{Model} from 'dvax'
+import {Model} from 'dvax'
 import model from './model'
-import Editor from './Editor'
+import Editor,{operations} from './Editor'
 
 Model.create(model)
+export {operations}
 export default Editor

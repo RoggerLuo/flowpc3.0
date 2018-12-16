@@ -16,13 +16,14 @@ const keybind = function(ref,actions){
         catcher(keyMap['backSpace'], { meta, ctrl }, deleteNote)
     })
 }
-
+const operations = {}
 class MyEditor extends React.Component {
     constructor(props) {
         super(props)
-        const itemId = Date.parse(new Date()) / 1000
-        this.state = { editorState: startFromScratch(), itemId, inputDOM: null }
+        const noteId = 'new' //Date.parse(new Date()) / 1000
+        this.state = { editorState: startFromScratch(), noteId, inputDOM: null }
         this.actions = getActions.bind(this)()
+        operations.new = () => this.actions.newNote()
         this.setRef = ref => {
             this.setState({ inputDOM: ref })
             keybind(ref,this.actions)
@@ -42,5 +43,5 @@ class MyEditor extends React.Component {
         )
     }
 }
-
+export {operations}
 export default MyEditor

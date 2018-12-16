@@ -4,7 +4,7 @@ export default {
     namespace: 'list',
     state: {
         notes: [],
-        index: 0,
+        editingNoteIndex: 0,
         loading:false,
         hasMore:true,
         query:{
@@ -17,8 +17,8 @@ export default {
         fetch(state,{ notes }) {
             return { ...state, notes }
         },
-        select(state,{ index }) {
-            return { ...state, index }
+        select(state,{ editingNoteIndex }) {
+            return { ...state, editingNoteIndex }
         },
         add(state,{ note }) {
             const notes = [note,...state.notes]
@@ -58,7 +58,7 @@ export default {
         }
     },
     effects: {
-        * getData({ fetch, change, get }){
+        * getData({ fetch, change, get },{callback}){
             const query = {...get().query}
             query.pageNum = 1
             yield change('query',query)    
@@ -71,6 +71,7 @@ export default {
             if(notes.length < query.pageSize) {
                 yield change('hasMore',false)
             }
+            callback && callback(notes)
         },
         * loadMore({change,fetch,get}){
             const query = {...get().query}
@@ -86,7 +87,6 @@ export default {
             if(notes.length < query.pageSize) {
                 yield change('hasMore',false)
             }
-
         },
         * deleteNote({ fetch, call, put },{ id }) {
             yield call(fetch, `note/${id}`, { method: 'delete' })
