@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --color --open",
     "build": "node ./webpack/build.js",
-    "test": "tape -r ./babelRegister.js src/**/*.spec.js"
+    "analyze": "webpack --config webpack/analyze.js --profile --json > webpack/stats.json"
   },
   "author": "",
   "license": "ISC",
@@ -55,6 +55,7 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
+    "webpack-bundle-analyzer": "^3.0.3",
     "whatwg-fetch": "^2.0.4"
   },
   "browserslist": [

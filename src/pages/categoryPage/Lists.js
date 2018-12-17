@@ -1,5 +1,4 @@
-import {connect} from 'dvax';
-import { message, Button, Layout, Row, Col, Icon,Modal,Input,List,Table,Form,Popconfirm } from 'antd';
+import {connect} from 'dvax'
 import AppItem from './AppItem'
 
 function Lists({appList,appAdmin,dispatch}){
