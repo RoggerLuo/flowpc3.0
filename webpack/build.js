@@ -12,6 +12,18 @@ function product(basic){
     basic.output.filename = 'bundle.[hash].js'
     basic.module.rules.push({
         test: /\.css$/,
+        exclude: /src/,
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+                {loader: 'css-loader'},
+                'postcss-loader'
+            ]
+        })
+    })
+    basic.module.rules.push({
+        test: /\.css$/,
+        exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [

@@ -25,6 +25,10 @@ module.exports = {
                     if(input.indexOf('dvax') != -1) {
                         return true
                     }
+                    if(input.indexOf('antd') !== -1) {
+                        return true
+                    }
+
                     if(input.indexOf('node_modules') != -1) {
                         return false                        
                     }
