@@ -39,22 +39,6 @@ export default function() {
             const callback = () => self.props.onDelete(itemId)
             Model.dispatch({ type: 'editor/delete', itemId, callback })
         },
-        saveNote() {
-        //     const { noteId, editorState } = self.state
-        //     const note = { noteId, content: editorState.getCurrentContent().getPlainText() }
-        //     if(noteId !== 'new') {
-        //         self.props.onSave && self.props.onSave(note)
-        //     }
-            // if (newNoteAdded) {
-            //     newNoteAdded = false
-            //     self.props.onNew && self.props.onNew(note)
-            // } else {
-            //     self.props.onSave && self.props.onSave(note)
-            // }
-            // const unsaved = Model.get('editor').unsaved
-            // debugger
-            // Model.dispatch({ type: 'editor/save', unsaved, itemId, editorState })
-        },
         newNote() {
             const { noteId, editorState } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
@@ -62,15 +46,9 @@ export default function() {
                 saveNote(noteId,newText)
             }
             Model.change('list','editingNoteIndex',null)
-            // saveNote = saveNote.bind(this)
-            // this.saveNote()
-
-            self.state.inputDOM.blur()
-            // const itemId = Date.parse(new Date()) / 1000
-            
+            self.state.inputDOM.blur()            
             self.setState({ editorState: startFromScratch(), noteId:'new' }, () => {
                 self.state.inputDOM.focus()
-                // newNoteAdded = true
             })
         },
         replace(note) {
@@ -105,6 +83,7 @@ export default function() {
                     self.state.inputDOM.focus()
                 })
             }
-        }
+        },
+        saveNote() {}
     }
 }

@@ -8,7 +8,8 @@ import getActions from './actions'
 
 const keybind = function(ref,actions){
     const { deleteNote, saveNote, newNote } = { ...actions }
-    if(!ref) return 
+
+    // if(!ref) return 
     const k = new Keyboard(ref)
     k.keybind(({ keyMap, meta, ctrl }, catcher) => {
         catcher(keyMap['n'], { meta, ctrl }, newNote)

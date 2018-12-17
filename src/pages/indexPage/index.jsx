@@ -1,8 +1,9 @@
 import React from 'react'
 import List from 'components/list'
-import Editor,{operations} from 'components/editor'
+import Editor from 'components/editor'
 import styled from 'styled-components'
 import {Model} from 'dvax'
+import {message} from 'antd'
 import Category from './category'
 const Body = styled.div`
     width:100%;
@@ -32,10 +33,22 @@ const Delete = styled.div`
     text-align:center;
     font-size:16px;
 `
+function deleteAction(){
+    Model.run('list',function*({fetch,get,change}){
+        const note = get().notes[get('app').selectedNoteIdx]
+        const res = yield fetch(`note/${note.id}`,{method:'delete'})
+        if(res.hasErrors) return
+        message.success('删除成功')
+        const notes = get().notes.slice()
+        notes.splice(get('app').selectedNoteIdx,1)
+        yield change('notes',notes)
+        Model.change('app','selectedNoteIdx',null)
+    })
+}
 function DeleteButton({selectedNoteIdx}){
     if(selectedNoteIdx!==null) {
         return (
-            <DeleteWrapper>
+            <DeleteWrapper onClick={deleteAction}>
                 <Delete>删 除</Delete>
             </DeleteWrapper>
         )    
