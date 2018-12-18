@@ -8,8 +8,7 @@ import getActions from './actions'
 
 const keybind = function(ref,actions){
     const { deleteNote, saveNote, newNote } = { ...actions }
-
-    // if(!ref) return 
+    if(!ref) return 
     const k = new Keyboard(ref)
     k.keybind(({ keyMap, meta, ctrl }, catcher) => {
         catcher(keyMap['n'], { meta, ctrl }, newNote)
@@ -17,14 +16,14 @@ const keybind = function(ref,actions){
         catcher(keyMap['backSpace'], { meta, ctrl }, deleteNote)
     })
 }
-const operations = {}
+const editorOperations = {}
 class MyEditor extends React.Component {
     constructor(props) {
         super(props)
         const noteId = 'new' //Date.parse(new Date()) / 1000
         this.state = { editorState: startFromScratch(), noteId, inputDOM: null }
         this.actions = getActions.bind(this)()
-        operations.new = () => this.actions.newNote()
+        editorOperations.new = () => this.actions.newNote()
         this.setRef = ref => {
             this.setState({ inputDOM: ref })
             keybind(ref,this.actions)
@@ -44,5 +43,5 @@ class MyEditor extends React.Component {
         )
     }
 }
-export {operations}
+export {editorOperations}
 export default MyEditor

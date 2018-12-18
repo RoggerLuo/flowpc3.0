@@ -10,9 +10,7 @@ import model from './model'
 Model.create(model)
 const fetch = Fetch({ 
     baseUrl: 'http://rorrc.3322.org:5556',
-    headers: {
-        // "Content-Type": "application/x-www-form-urlencoded", // 经常不用写,直接用FormData
-    },
+    headers: {},// "Content-Type": "application/x-www-form-urlencoded", // 经常不用写,直接用FormData
     requestBody(body){
         const postdata = new FormData()
         for (let k in body) {

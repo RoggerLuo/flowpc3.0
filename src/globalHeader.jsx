@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {operations} from 'components/editor'
+import {editorOperations} from 'components/editor'
 const Wrapper = styled.div`
     width:100%;
     height:41px;
@@ -25,7 +25,7 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
                         <div onClick={()=>handleClick({key:'index'})} style={{cursor:'pointer'}}>返回</div>
                     }
                 </Item>
-                <div style={{paddingRight:'13px',color:'#ccc',cursor:'pointer'}} onClick={()=>this.handleClick({key:'category'})}>
+                <div style={{paddingRight:'13px',color:'#ccc',cursor:'pointer'}} onClick={()=>handleClick({key:'category'})}>
                     {current==='index'? '设置':null}
                 </div>
             </div>
@@ -37,7 +37,7 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
             </div>
             <div style={{flex:1}}>
                 <div style={{display:'flex',justifyContent:'space-between'}}>
-                    <Item onClick={()=>operations.new()} style={{cursor:'pointer'}}>
+                    <Item onClick={()=>editorOperations.new()} style={{cursor:'pointer'}}>
                         新建
                     </Item>
                     <Item>

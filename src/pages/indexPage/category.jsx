@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import {message} from 'antd'
+import {editorOperations} from 'components/editor'
+
 const ItemWrap = styled.div`
     padding:5px 5px;
     width:50%;
@@ -33,7 +35,6 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
     const onClick = category => {
         if(selectedNoteIdx!==null) { // 分类note到category
             Model.run('app',function*({fetch,get,change}){
-
                 const note = get('list').notes[selectedNoteIdx]
                 const res = yield fetch(`classify/${note.id}/${category.id}`)
                 if(res.hasErrors) return
@@ -42,19 +43,19 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 yield change('selectedNoteIdx',null)
                 message.success('分类成功')
                 Model.change('list','notes',notes)
-
             })
         }else{ // 查看分类下的文章
             Model.change('category','selectedCategory',category)
             Model.change('list','query.categoryId',category.id)
             Model.dispatch({type:'list/getData'})
+            Model.change('list','editingNoteIndex',null)
+            editorOperations.new()
         }
     }
     const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
     return (
         <div style={style}>
             {categoryList.map((el,ind)=>{
-
                 if(selectedCategory.id === el.id && selectedNoteIdx===null) {
                     return (
                         <ItemWrap key={ind}>

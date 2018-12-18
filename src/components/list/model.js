@@ -4,7 +4,7 @@ export default {
     namespace: 'list',
     state: {
         notes: [],
-        editingNoteIndex: 0,
+        editingNoteIndex: null,
         loading:false,
         hasMore:true,
         query:{
