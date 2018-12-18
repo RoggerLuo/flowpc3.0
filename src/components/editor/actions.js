@@ -4,6 +4,7 @@ import { Model } from 'dvax'
 import debounce from 'dvax/debounce'
 
 function saveNote(noteId,content,callback){
+    if(!Model.get('editor').unsaved) return
     Model.run('list',function*({fetch,get,change}){
         if(noteId !== 'new') {
             const body = {content}
@@ -84,6 +85,16 @@ export default function() {
                 })
             }
         },
-        saveNote() {}
+        saveNote() {
+            // if(!Model.get('editor').unsaved) return
+            const { noteId, editorState } = self.state
+            const content = editorState.getCurrentContent().getPlainText()
+            saveNote(noteId,content,insertId=>{
+                Model.change('editor', 'unsaved', false)
+                if(insertId) { //如果是新建
+                    self.setState({noteId:insertId})
+                }
+            })        
+        }
     }
 }

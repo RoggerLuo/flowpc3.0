@@ -1,6 +1,6 @@
 export default actions => command => {
     if (command === 'save') {
-        // actions.saveNote()
+        actions.saveNote()
         return 'handled'
     }
     if (command === 'new') {
