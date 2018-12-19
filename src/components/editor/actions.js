@@ -22,7 +22,7 @@ function saveNote(noteId,content,callback){
         }
     })
 }
-const saveNoteDebouce = debounce(saveNote,1500)
+const saveNoteDebouce = debounce(saveNote,500)
 
 export default function() {
     const self = this
