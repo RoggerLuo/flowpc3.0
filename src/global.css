@@ -7,3 +7,6 @@ html, body, :global(#root) {
 :global(.ant-menu-horizontal){
     border:none;
 }
+:global(h3){
+    font-weight:400 !important;
+}

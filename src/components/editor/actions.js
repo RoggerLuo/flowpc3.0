@@ -17,8 +17,14 @@ function saveNote(noteId,content,callback){
             const notes = get().notes.slice()
             notes.unshift({content,id})
             yield change('notes',notes)
+            const editingNoteIndex = get('list').editingNoteIndex
             callback && callback(id)
-            Model.change('list','editingNoteIndex',0)
+
+            if(editingNoteIndex!==null) {
+                Model.change('list','editingNoteIndex',editingNoteIndex+1)
+            }else{
+                Model.change('list','editingNoteIndex',0)
+            }
         }
     })
 }

@@ -1,6 +1,6 @@
-import { Popconfirm, Input } from 'antd'
+import { Popconfirm, Input, InputNumber } from 'antd'
 import React from 'react'
-import AppItemlist from './AppItemlist'
+// import AppItemlist from './AppItemlist'
 import {Model} from 'dvax'
 import debounce from 'dvax/debounce' 
 const save = (name,id) => {
@@ -8,7 +8,13 @@ const save = (name,id) => {
         const res = fetch(`category/${id}`,{method:'post',body:{name}})
     })
 }
-const onChange = debounce(save,1000)
+const orderChange = (order,id) => {
+    Model.run('',function*({fetch}){
+        const res = fetch(`order/${id}/${order}`)
+    })
+}
+const onChange = debounce(save,500)
+const onChangeOrder = debounce(orderChange,500)
 const columns = [
     {
         title: '类别名称',
@@ -19,12 +25,10 @@ const columns = [
         }
     }, 
     {
-        title: '添加超类',
+        title: '排序号',
         width: '20%',
         render: (text, record) => {
-            return(
-                <AppItemlist getCateid={record._id}/>   //appDmin.list
-            )
+            return (<InputNumber defaultValue={record.order_number} onChange={value=>onChangeOrder(value,record.id)}/>)
         }
     }, 
     {

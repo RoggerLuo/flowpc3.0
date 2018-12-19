@@ -19,15 +19,19 @@ const Content = styled.div`
     font-size:16px;
     line-height:1.5;
     min-height:50px;
-
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 `
-
 function getFirstLine(string){
     if(string.indexOf('\n')!==-1) {
+        if(string.indexOf('\n') === 0 ){
+            return getFirstLine(string.slice(1))
+        }
+        if(string.indexOf('\n') === 1 ){
+            return getFirstLine(string.slice(2))
+        }
         return string.slice(0,string.indexOf('\n'))
     }
     return string
@@ -36,7 +40,6 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
     const isSelected = index === selectedNoteIdx
     const isEditing = index === editingNoteIndex
     const select = e => {
-        //if(isSelected) return // #1890ff
         Model.dispatch({ type: 'list/select', editingNoteIndex:index })
         Model.change('app','selectedNoteIdx',null)
         onSelect(note)
@@ -71,7 +74,6 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
                 {note.content}
             </Content>
         </Wrapper>
-    )    
-
+    )
 }
 export default Note

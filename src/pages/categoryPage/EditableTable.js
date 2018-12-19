@@ -20,7 +20,7 @@ class EditableTable extends React.Component {
         <div>   
             <Table 
                 bordered  
-                pagination={{defaultCurrent:1,defaultPageSize:6}} 
+                pagination={false} 
                 dataSource={dataSource} 
                 columns={columns} 
                 rowKey={record=>record.id} 
@@ -30,8 +30,4 @@ class EditableTable extends React.Component {
     }
 }
 export default EditableTable
-
-
-
-
-
+//{defaultCurrent:1,defaultPageSize:6}
