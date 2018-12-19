@@ -28,18 +28,6 @@ export default function() {
     const self = this
     let oldText = ''
     return {
-        deleteNote() {
-            const { itemId, editorState } = self.state
-            // 构建hint
-            let content = editorState.getCurrentContent().getPlainText()
-            if (content.length > 20) {
-                content = content.slice(0, 20) + '...'
-            }
-            if (!confirm(`确定要删除当前文章吗?\n"${content}"`)) return
-            // 发送请求，执行callback
-            const callback = () => self.props.onDelete(itemId)
-            Model.dispatch({ type: 'editor/delete', itemId, callback })
-        },
         newNote() {
             const { noteId, editorState } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
@@ -86,7 +74,6 @@ export default function() {
             }
         },
         saveNote() {
-            // if(!Model.get('editor').unsaved) return
             const { noteId, editorState } = self.state
             const content = editorState.getCurrentContent().getPlainText()
             saveNote(noteId,content,insertId=>{
@@ -95,6 +82,19 @@ export default function() {
                     self.setState({noteId:insertId})
                 }
             })        
-        }
+        },
+        deleteNote() {
+            return
+            const { itemId, editorState } = self.state
+            // 构建hint
+            let content = editorState.getCurrentContent().getPlainText()
+            if (content.length > 20) {
+                content = content.slice(0, 20) + '...'
+            }
+            if (!confirm(`确定要删除当前文章吗?\n"${content}"`)) return
+            // 发送请求，执行callback
+            const callback = () => self.props.onDelete(itemId)
+            Model.dispatch({ type: 'editor/delete', itemId, callback })
+        },
     }
 }
