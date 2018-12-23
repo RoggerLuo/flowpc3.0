@@ -3,23 +3,26 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
-
-const ItemWrap = styled.div`
-    padding:5px 5px;
+/* 
     width:50%;
     float:left;
+        padding:5px 5px;
+    border-radius: 5px;
+
+ */
+const ItemWrap = styled.div`
 `
 const Item = styled.div`
     height: 100px;
     width: 100%;
-    border-radius: 5px;
     display: flex;
     text-align: center;
-    background-color: white;
+    background-color:white;
     cursor: pointer;
     color: black;
     font-size: 14px;
     color: #5d5d5d;
+    margin-bottom:1px;
 `
 const ItemText  = styled.div`
     max-width: 150px;
@@ -27,8 +30,13 @@ const ItemText  = styled.div`
     margin:auto;
     word-break: break-all;
 `
+const Wrapper = styled.div`
+    -webkit-box-shadow: 0 2px 6px #adadad;
+    -moz-box-shadow: 0 2px 6px #adadad;
+    box-shadow: 0 2px 6px #adadad;
+`
 function Category({ list, selectedNoteIdx, selectedCategory }){
-    const style = { padding:'5px 5px', height:'100%' }
+    const style = { height:'100%',overflow:'auto' } //padding:'5px 5px',
     if(selectedNoteIdx!==null) {
         style.backgroundColor = '#1990fe'
     }
@@ -54,12 +62,12 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
     }
     const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
     return (
-        <div style={style}>
+        <Wrapper style={style}>
             {categoryList.map((el,ind)=>{
                 if(selectedCategory.id === el.id && selectedNoteIdx===null) {
                     return (
                         <ItemWrap key={ind}>
-                            <Item onClick={()=>onClick(el)} style={{backgroundColor:'lightgrey'}}>
+                            <Item onClick={()=>onClick(el)} style={{backgroundColor:'#ececec'}}>
                                 <ItemText>
                                     <div>{el.name}</div>
                                 </ItemText>
@@ -76,8 +84,8 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                         </Item>
                     </ItemWrap>
                 )
-            }
-        )}
-    </div>)
+            })}
+        </Wrapper>
+    )
 }
 export default Category

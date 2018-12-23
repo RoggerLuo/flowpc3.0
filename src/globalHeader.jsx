@@ -19,23 +19,31 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
     return (
         <Wrapper>
             <div style={{flex:1,display:'flex',justifyContent:'space-between'}}>
+                {
+                        current==='index'?
+                        <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={()=>handleClick({key:'category'})}>
+                            {current==='index'? '编辑分类':null}
+                        </div>:
+                        <div onClick={()=>handleClick({key:'index'})} style={{padding:'0px 13px',cursor:'pointer'}}>返回</div>
+
+                
+                }
+
                 <Item>
-                    {current==='index'?
-                        <div>{selectedCategory.name||'Uncategorized'}</div>:
-                        <div onClick={()=>handleClick({key:'index'})} style={{cursor:'pointer'}}>返回</div>
+                    {null
+                        // current==='index'?
+                        // <div>{selectedCategory.name||'Uncategorized'}</div>:
+                        // <div onClick={()=>handleClick({key:'index'})} style={{cursor:'pointer'}}>返回</div>
                     }
                 </Item>
-                <div style={{paddingRight:'13px',color:'#ccc',cursor:'pointer'}} onClick={()=>handleClick({key:'category'})}>
-                    {current==='index'? '设置':null}
-                </div>
             </div>
             
-            <div style={{flex:1}}>
+            <div style={{flex:2}}>
                 <Item>
 
                 </Item>
             </div>
-            <div style={{flex:1}}>
+            <div style={{flex:3}}>
                 <div style={{display:'flex',justifyContent:'space-between'}}>
                     <Item onClick={()=>editorOperations.new()} style={{cursor:'pointer'}}>
                         新建
@@ -44,7 +52,7 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
                         {
                             unsaved?
                                 <div style={{color:'orange'}}>未保存</div>:
-                                <div>已保存</div>
+                                <div style={{color:'#ccc'}}>已保存</div>
                         }
                     </Item>
                 </div>

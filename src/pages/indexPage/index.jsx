@@ -47,11 +47,11 @@ class App extends React.Component {
                     <Category {...this.props}/>
                 </div>
                 
-                <div style={{flex:1,borderRight:'1px solid #ccc'}}>
+                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <List onSelect={this.onSelect}/>
                 </div>
                 
-                <div style={{flex:1}}>
+                <div style={{flex:3}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
                     <DeleteButton {...this.props}/>
                 </div>

@@ -2,11 +2,13 @@ import React from 'react'
 import { Model } from 'dvax'
 import Note from './note'
 import styled from 'styled-components'
-const Container = styled.div`
-    border-right: 1px solid #e8e8e8;
+/*     padding: 1px;
     border-radius: 4px;
+    border-right: 1px solid #e8e8e8;
+ */
+const Container = styled.div`
+
     overflow: auto;
-    padding: 10px 10px;
     height: 100%;
     &::-webkit-scrollbar {
         width: 0px;
@@ -18,7 +20,7 @@ const Container = styled.div`
 `
 const LoadingContainer = styled.div`
     position: absolute;
-    bottom: 40px;
+    bottom: 49%;
     text-align: center;
     left:0;
     width:100%;
