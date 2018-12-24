@@ -34,9 +34,21 @@ const Wrapper = styled.div`
     -webkit-box-shadow: 0 2px 6px #adadad;
     -moz-box-shadow: 0 2px 6px #adadad;
     box-shadow: 0 2px 6px #adadad;
+
+    height:100%;
+    overflow:auto;
+
+    &::-webkit-scrollbar {
+        width: 0px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #d6d6d6;
+    }
+
 `
 function Category({ list, selectedNoteIdx, selectedCategory }){
-    const style = { height:'100%',overflow:'auto' } //padding:'5px 5px',
+    const style = {} //padding:'5px 5px',
     if(selectedNoteIdx!==null) {
         style.backgroundColor = '#1990fe'
     }

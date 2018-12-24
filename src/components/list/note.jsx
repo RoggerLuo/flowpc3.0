@@ -2,17 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 const Wrapper = styled.div`
-margin-bottom:1px;
-
-padding:15px 10px 15px 10px;
+    margin-bottom:1px;
+    padding:15px 10px 15px 10px;
     background-color:white;
 `
-/*     border-radius: 5px;
-
-    border-radius: 5px;
-    margin-bottom:10px;
-
-*/
 const WrapperBlue = styled.div`
     padding:15px 10px 15px 10px;
     background-color:#1890ff;
@@ -28,9 +21,7 @@ const Content = styled.div`
     overflow: hidden;
 `
 const Text = styled.div`
-
 `
-
 function getFirstLine(string){
     if(string.indexOf('\n')!==-1) {
         if(string.indexOf('\n') === 0 ){
@@ -81,6 +72,3 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
     )
 }
 export default Note
-//                 {note.content}
-//                    {note.content}
-//                    {note.content}

@@ -2,12 +2,7 @@ import React from 'react'
 import { Model } from 'dvax'
 import Note from './note'
 import styled from 'styled-components'
-/*     padding: 1px;
-    border-radius: 4px;
-    border-right: 1px solid #e8e8e8;
- */
 const Container = styled.div`
-
     overflow: auto;
     height: 100%;
     &::-webkit-scrollbar {
@@ -20,10 +15,10 @@ const Container = styled.div`
 `
 const LoadingContainer = styled.div`
     position: absolute;
-    bottom: 49%;
+    bottom: 2%;
     text-align: center;
-    left:0;
-    width:100%;
+    left:16%;
+    right:50%;
 `
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'

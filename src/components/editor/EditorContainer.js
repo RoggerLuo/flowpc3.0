@@ -1,18 +1,32 @@
 import React from 'react'
 import { connect } from 'dvax'
 import img from './bg.png'
-
+import styled from 'styled-components'
+const OuterMost = styled.div`
+    font-size:17px;
+    cursor:text;
+    height:100%;
+    background-color:white;
+    overflow-y:scroll;
+    &::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #d6d6d6;
+    }
+`
 function Container({ children, focus, unsaved }) {
-    let style = { fontSize:'17px', cursor:'text', height:'100%', backgroundColor:'white' }
+    let style = {}
     if(unsaved){
         style = { ...style, backgroundImage: `url(${img})` }            
     }
     return (
-        <div style={style} onClick={focus}>
+        <OuterMost style={style} onClick={focus}>
             <div style={{ padding: '10px' }}>
                 {children}
             </div>
-        </div>
+        </OuterMost>
     )
 }
 function mapStateToProps(state) {
