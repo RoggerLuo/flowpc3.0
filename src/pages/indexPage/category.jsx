@@ -31,10 +31,6 @@ const ItemText  = styled.div`
     word-break: break-all;
 `
 const Wrapper = styled.div`
-    -webkit-box-shadow: 0 2px 6px #adadad;
-    -moz-box-shadow: 0 2px 6px #adadad;
-    box-shadow: 0 2px 6px #adadad;
-
     height:100%;
     overflow:auto;
 

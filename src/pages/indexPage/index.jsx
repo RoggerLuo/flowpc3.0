@@ -8,7 +8,7 @@ import DeleteButton from './delete'
 
 const Body = styled.div`
     width:100%;
-    background-color:#f5f5f5;
+    background-color:#e8e8e8;
     position:absolute;
     top:41px;
     bottom:0px;
