@@ -13,7 +13,7 @@ import {editorOperations} from 'components/editor'
 const ItemWrap = styled.div`
 `
 const Item = styled.div`
-    height: 100px;
+    height: 62px;
     width: 100%;
     display: flex;
     text-align: center;
