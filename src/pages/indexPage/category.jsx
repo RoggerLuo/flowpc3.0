@@ -3,15 +3,7 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
-/* 
-    width:50%;
-    float:left;
-        padding:5px 5px;
-    border-radius: 5px;
-
- */
-const ItemWrap = styled.div`
-`
+const ItemWrap = styled.div``
 const Item = styled.div`
     height: 62px;
     width: 100%;
