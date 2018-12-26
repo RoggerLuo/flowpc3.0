@@ -10,7 +10,7 @@ export default {
         query:{
             pageNum: 1,
             pageSize: 15,
-            categoryId:0
+            categoryId:'all'
         }
     },
     reducers: {
