@@ -26,6 +26,7 @@ class App extends React.Component {
             const res = yield fetch(`categories`)
             yield change('list',res.data)
         })
+        // 初始化拉去文章信息
         Model.dispatch({type:'list/getData',callback:(notes)=>{
             // 不用选择第一篇
             // if (notes[0]) {
