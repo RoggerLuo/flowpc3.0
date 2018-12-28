@@ -22,7 +22,13 @@ const LoadingContainer = styled.div`
 `
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
-
+const InserLine = styled.div`
+    padding:0px 5px;
+    line-height:28px;
+    color: #b7b6b6;
+    border-bottom:1px solid #ececec;
+    background-color:white;
+`
 class InfiniteListExample extends React.Component {
     state = {}
     render() {
@@ -48,7 +54,7 @@ class InfiniteListExample extends React.Component {
                             weekMark = false
                             return (
                                 <div key={index}>
-                                    <div style={{padding:'0px 5px',lineHeight:'28px',color: '#b7b6b6'}}>一周以前</div>
+                                    <InserLine>一周以前</InserLine>
                                     <Note {...this.props} note={note} index={index}/>
                                 </div>
                             )
@@ -61,7 +67,7 @@ class InfiniteListExample extends React.Component {
                             monthMark = false
                             return (
                                 <div key={index}>
-                                    <div style={{padding:'0px 5px',lineHeight:'28px',color: '#b7b6b6'}}>一个月以前</div>
+                                    <InserLine>一个月以前</InserLine>
                                     <Note {...this.props} note={note} index={index}/>
                                 </div>
                             )
@@ -73,7 +79,7 @@ class InfiniteListExample extends React.Component {
                             threeMonthsMark = false
                             return (
                                 <div key={index}>
-                                    <div style={{padding:'0px 5px',lineHeight:'28px',color: '#b7b6b6'}}>三个月以前</div>
+                                    <InserLine>三个月以前</InserLine>
                                     <Note {...this.props} note={note} index={index}/>
                                 </div>
                             )
