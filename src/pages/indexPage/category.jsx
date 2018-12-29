@@ -52,6 +52,7 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 message.success('分类成功')
                 Model.change('list','notes',notes)
                 Model.change('list','editingNoteIndex',null)
+                editorOperations.new()
             })
         }else{ // 查看分类下的文章
             Model.change('category','selectedCategory',category)
