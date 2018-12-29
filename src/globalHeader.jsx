@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {editorOperations} from 'components/editor'
+import {Model} from 'dvax'
 const Wrapper = styled.div`
     width:100%;
     height:41px;
@@ -16,17 +17,20 @@ const Item = styled.div`
     font-weight:500;
 `
 function Header ({handleClick,current,selectedCategory,unsaved}) {
+    function enterCategoryEditing(){
+        Model.change('list','editingNoteIndex',null)
+        editorOperations.new()
+        handleClick({key:'category'})
+    }
     return (
         <Wrapper>
             <div style={{flex:1,display:'flex',justifyContent:'space-between'}}>
                 {
                         current==='index'?
-                        <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={()=>handleClick({key:'category'})}>
+                        <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={enterCategoryEditing}>
                             {current==='index'? '编辑分类':null}
                         </div>:
                         <div onClick={()=>handleClick({key:'index'})} style={{padding:'0px 13px',cursor:'pointer'}}>返回</div>
-
-                
                 }
 
                 <Item>
