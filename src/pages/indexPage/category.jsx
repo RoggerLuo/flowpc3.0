@@ -51,6 +51,7 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 yield change('selectedNoteIdx',null)
                 message.success('分类成功')
                 Model.change('list','notes',notes)
+                Model.change('list','editingNoteIndex',null)
             })
         }else{ // 查看分类下的文章
             Model.change('category','selectedCategory',category)
