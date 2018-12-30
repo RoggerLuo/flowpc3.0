@@ -3,6 +3,24 @@ import React from 'react'
 // import AppItemlist from './AppItemlist'
 import {Model} from 'dvax'
 import debounce from 'dvax/debounce' 
+import { GithubPicker } from 'react-color'
+class ColorComponent extends React.Component {
+    handleChange = color => {
+        Model.change('category',`list[${this.props.index}].color`,color.hex)
+        const categoryId = Model.get('category').list[this.props.index].id
+        Model.run('category',function*({fetch}){
+            const res = yield fetch(`changeColor`,{method:'POST',body:{categoryId,color:color.hex}})
+            if(!res.hasErrors) return
+            message.success('颜色设置成功')
+        })
+    }
+    render() {
+        return (<div>
+            <GithubPicker width={'213px'} onChange={ this.handleChange } triangle={'hide'}/>
+        </div>)
+    }
+}
+
 const save = (name,id) => {
     Model.run('',function*({fetch}){
         const res = fetch(`category/${id}`,{method:'post',body:{name}})
@@ -30,7 +48,23 @@ const columns = [
         render: (text, record) => {
             return (<InputNumber defaultValue={record.order_number} onChange={value=>onChangeOrder(value,record.id)}/>)
         }
+    },
+    {
+        title:'颜色',
+        width: '20%',
+        render(value,record,ind){
+            return (<ColorComponent index={ind}/>)
+        } 
     }, 
+    {
+        title:'',
+        width: '20%',
+        dataIndex: 'color',
+        render(value){
+            return <div style={{width:'100%',height:'58px',backgroundColor:value||'white'}}></div>
+        }
+    },
+
     {
         title: '操作',
         dataIndex: 'operation',
@@ -41,6 +75,7 @@ const columns = [
                     </Popconfirm>    
                 )
             }
-    }]
+    },
+    ]
 
 export default columns

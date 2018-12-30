@@ -56,7 +56,7 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
     }
     if(isEditing) {
         return (
-            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={{backgroundColor:'#ececec'}}>
+            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={{backgroundColor:'#f7f7f7'}}>
                 <Content>
                     <Text>{getFirstLine(note.content)}</Text>
                 </Content>

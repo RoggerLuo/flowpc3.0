@@ -25,7 +25,6 @@ const ItemText  = styled.div`
 const Wrapper = styled.div`
     height:100%;
     overflow:auto;
-
     &::-webkit-scrollbar {
         width: 0px;
         background-color: transparent;
@@ -33,8 +32,15 @@ const Wrapper = styled.div`
     &::-webkit-scrollbar-thumb {
         background: #d6d6d6;
     }
-
 `
+const getTag = color => styled.div`
+    background-color:${color};
+    width:7px;
+    height:100%;
+`
+function hexToRgba(hex, opacity) { 
+    return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
+}
 function Category({ list, selectedNoteIdx, selectedCategory }){
     const style = {} //padding:'5px 5px',
     if(selectedNoteIdx!==null) {
@@ -66,10 +72,14 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
     return (
         <Wrapper style={style}>
             {categoryList.map((el,ind)=>{
+                const Tag = getTag(el.color)
+                const selectedColor = el.color?hexToRgba(el.color,0.2):'#ececec'
+                
                 if(selectedCategory.id === el.id && selectedNoteIdx===null) {
                     return (
-                        <ItemWrap key={ind}>
-                            <Item onClick={()=>onClick(el)} style={{backgroundColor:'#ececec'}}>
+                        <ItemWrap key={ind} >
+                            <Item onClick={()=>onClick(el)} style={{backgroundColor:selectedColor}}>
+                                <Tag/>
                                 <ItemText>
                                     <div>{el.name}</div>
                                 </ItemText>
@@ -80,6 +90,8 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 return (
                     <ItemWrap key={ind}>
                         <Item onClick={()=>onClick(el)}>
+                            <Tag/>
+
                             <ItemText>
                                 <div>{el.name}</div>
                             </ItemText>
