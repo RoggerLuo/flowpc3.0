@@ -63,9 +63,10 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
         }else{ // 查看分类下的文章
             Model.change('category','selectedCategory',category)
             Model.change('list','query.categoryId',category.id)
-            Model.dispatch({type:'list/getData'})
             Model.change('list','editingNoteIndex',null)
             editorOperations.new()
+            Model.change('list','hasMore',true)
+            Model.dispatch({type:'list/getData'})
         }
     }
     const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]

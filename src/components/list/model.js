@@ -68,7 +68,7 @@ export default {
             const notes = res.data
             yield change('notes',notes)
             yield change('loading',false)
-            if(notes.length < query.pageSize) {
+            if(notes.length < query.pageSize && query.pageNum!=1) {
                 yield change('hasMore',false)
             }
             callback && callback(notes)
