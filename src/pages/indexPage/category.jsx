@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
-const ItemWrap = styled.div``
+const ItemWrap = styled.div`
+    border-bottom:1px solid #ececec;
+`
 const Item = styled.div`
     height: 62px;
     width: 100%;
@@ -14,7 +16,6 @@ const Item = styled.div`
     color: black;
     font-size: 14px;
     color: #5d5d5d;
-    margin-bottom:1px;
 `
 const ItemText  = styled.div`
     max-width: 150px;
@@ -23,6 +24,7 @@ const ItemText  = styled.div`
     word-break: break-all;
 `
 const Wrapper = styled.div`
+    background-color:white;
     height:100%;
     overflow:auto;
     &::-webkit-scrollbar {
@@ -61,12 +63,13 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 editorOperations.new()
             })
         }else{ // 查看分类下的文章
-            Model.change('category','selectedCategory',category)
             Model.change('list','query.categoryId',category.id)
             Model.change('list','editingNoteIndex',null)
             editorOperations.new()
             Model.change('list','hasMore',true)
-            Model.dispatch({type:'list/getData'})
+            Model.dispatch({type:'list/getData',callback(){
+                Model.change('category','selectedCategory',category)
+            }})
         }
     }
     const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
@@ -74,7 +77,7 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
         <Wrapper style={style}>
             {categoryList.map((el,ind)=>{
                 const Tag = getTag(el.color)
-                const selectedColor = el.color?hexToRgba(el.color,0.2):'#ececec'
+                const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
                 
                 if(selectedCategory.id === el.id && selectedNoteIdx===null) {
                     return (

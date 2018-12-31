@@ -66,6 +66,7 @@ export default {
             const res = yield fetch(`notes`,{query})
             if(res.hasErrors) return
             const notes = res.data
+            yield change('notes',[])
             yield change('notes',notes)
             yield change('loading',false)
             if(notes.length < query.pageSize && query.pageNum!=1) {
@@ -80,6 +81,7 @@ export default {
             
             yield change('loading',true)
             const res = yield fetch(`notes`,{query})
+            console.log('load more...')
             if(res.hasErrors) return
             const notes = res.data
             yield change('notes',[...get().notes,...notes])

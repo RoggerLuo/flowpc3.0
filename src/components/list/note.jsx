@@ -34,7 +34,7 @@ function getFirstLine(string){
     }
     return string
 }
-function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
+function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note,selectedCategory }){
     const isSelected = index === selectedNoteIdx
     const isEditing = index === editingNoteIndex
     const select = e => {
@@ -45,6 +45,11 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
     function onDoubleClick(){
         Model.change('app','selectedNoteIdx',index)
     }
+    const style = {}
+    if(isEditing) {
+        style.backgroundColor = '#f7f7f7'
+    }
+
     if(isSelected) {
         return (
             <WrapperBlue onClick={select} onDoubleClick={onDoubleClick}>
@@ -54,7 +59,7 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
             </WrapperBlue>
         )    
     }
-    if(isEditing) {
+/*     if(isEditing) {
         return (
             <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={{backgroundColor:'#f7f7f7'}}>
                 <Content>
@@ -62,9 +67,19 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note }){
                 </Content>
             </Wrapper>
         )    
+    } */
+
+    if(note.category === selectedCategory.id) {
+        return (
+            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={style}>
+                <Content>
+                    <Text style={{fontWeight:'500'}}>{getFirstLine(note.content)}</Text>
+                </Content>
+            </Wrapper>
+        )    
     }
     return (
-        <Wrapper onClick={select} onDoubleClick={onDoubleClick}>
+        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={style}>
             <Content>
                 <Text>{getFirstLine(note.content)}</Text>
             </Content>

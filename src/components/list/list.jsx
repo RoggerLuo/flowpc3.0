@@ -97,4 +97,4 @@ class InfiniteListExample extends React.Component {
         )
     }
 }
-export default Model.connect(['app','list'])(InfiniteListExample)
+export default Model.connect(['category','app','list'])(InfiniteListExample)
