@@ -65,7 +65,7 @@ export default {
             yield change('loading',true)
             const res = yield fetch(`notes`,{query})
             if(res.hasErrors) return
-            const notes = res.data
+            const notes = res.data || []
             yield change('notes',[])
             yield change('notes',notes)
             yield change('loading',false)

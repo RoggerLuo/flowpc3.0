@@ -4,8 +4,9 @@ import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
 const ItemWrap = styled.div`
-    border-bottom:1px solid #ececec;
+    border-bottom:1px solid transparent;
 `
+//#ececec
 const Item = styled.div`
     height: 62px;
     width: 100%;
@@ -47,6 +48,8 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
     const style = {} //padding:'5px 5px',
     if(selectedNoteIdx!==null) {
         style.backgroundColor = '#1990fe'
+    }else{
+        style.backgroundColor = '#ececec'
     }
     const onClick = category => {
         if(selectedNoteIdx!==null) { // 分类note到category

@@ -4,7 +4,7 @@ import React from 'react'
 import Form from './Form'
 
 const AddNewCategory = () => {
-    const handleSubmit = (form) => {
+    const handleSubmit = form => {
         const name = form.getFieldsValue().name
         if(!name) {
             message.info('请输入类别名称')
@@ -12,6 +12,7 @@ const AddNewCategory = () => {
         }
         Model.dispatch({type: 'category/create',name})
         Model.dispatch({type:'category/loading'})
+        form.resetFields()
     }
     return <Form handleSubmit={handleSubmit}/>
 }

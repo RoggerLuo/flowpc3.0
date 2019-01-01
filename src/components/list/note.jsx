@@ -69,7 +69,7 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note,selecte
         )    
     } */
 
-    if(note.category === selectedCategory.id) {
+    if(note.category === selectedCategory.id && selectedCategory.id!==0) {
         return (
             <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={style}>
                 <Content>
