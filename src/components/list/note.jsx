@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Model} from 'dvax'
+import moment  from 'moment'
 const Wrapper = styled.div`
     margin-bottom:1px;
     padding:15px 10px 15px 10px;
     background-color:white;
 `
 const WrapperBlue = styled.div`
+    margin-bottom:1px;
     padding:15px 10px 15px 10px;
     background-color:#1890ff;
     color:white;
@@ -22,6 +24,10 @@ const Content = styled.div`
 `
 const Text = styled.div`
 `
+const SmallText = styled.div`
+    color: #888888;
+    font-size: 12px;
+`
 function getFirstLine(string){
     if(string.indexOf('\n')!==-1) {
         if(string.indexOf('\n') === 0 ){
@@ -30,9 +36,9 @@ function getFirstLine(string){
         if(string.indexOf('\n') === 1 ){
             return getFirstLine(string.slice(2))
         }
-        return string.slice(0,string.indexOf('\n'))
+        return [string.slice(0,string.indexOf('\n')),string.slice(string.indexOf('\n'))]
     }
-    return string
+    return [string,'']
 }
 function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note,selectedCategory }){
     const isSelected = index === selectedNoteIdx
@@ -45,43 +51,37 @@ function Note({ onSelect, editingNoteIndex, index, selectedNoteIdx, note,selecte
     function onDoubleClick(){
         Model.change('app','selectedNoteIdx',index)
     }
-    const style = {}
+    const wrapperStyle = {}
     if(isEditing) {
-        style.backgroundColor = '#f7f7f7'
+        wrapperStyle.backgroundColor = '#f7f7f7'
     }
-
+    const [fisrtLine,rest] = getFirstLine(note.content)
+    const [secondLine,_]= getFirstLine(rest)
     if(isSelected) {
         return (
             <WrapperBlue onClick={select} onDoubleClick={onDoubleClick}>
                 <Content>
-                    <Text style={{color:'white'}}>{getFirstLine(note.content)}</Text>
+                    <Text style={{color:'white'}}>{fisrtLine}</Text>
+                    <SmallText style={{color:'white'}}>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
                 </Content>
             </WrapperBlue>
         )    
     }
-/*     if(isEditing) {
-        return (
-            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={{backgroundColor:'#f7f7f7'}}>
-                <Content>
-                    <Text>{getFirstLine(note.content)}</Text>
-                </Content>
-            </Wrapper>
-        )    
-    } */
-
     if(note.category === selectedCategory.id && selectedCategory.id!==0) {
         return (
-            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={style}>
+            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
                 <Content>
-                    <Text style={{fontWeight:'500'}}>{getFirstLine(note.content)}</Text>
+                    <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
+                    <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
                 </Content>
             </Wrapper>
         )    
     }
     return (
-        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={style}>
+        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
             <Content>
-                <Text>{getFirstLine(note.content)}</Text>
+                <Text>{fisrtLine}</Text>
+                <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
             </Content>
         </Wrapper>
     )

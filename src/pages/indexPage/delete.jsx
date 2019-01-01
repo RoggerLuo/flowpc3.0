@@ -7,14 +7,13 @@ const DeleteWrapper = styled.div`
     position: fixed;
     bottom: 0px;
     right: 0px;
-    width: 33%;
+    width: 50%;
     height: 75px;
     display:flex;
 `
 const Delete = styled.div`
     color:white;
     background-color:red;
-    border-radius:15px;
     width:90%;
     height:55px;
     margin:0 auto auto auto; 
@@ -32,6 +31,7 @@ function deleteAction(){
         notes.splice(get('app').selectedNoteIdx,1)
         yield change('notes',notes)
         Model.change('app','selectedNoteIdx',null)
+        Model.dispatch({type:'list/loadMore'})
         editorOperations.new()
     })
 }

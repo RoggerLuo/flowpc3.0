@@ -2,7 +2,7 @@ import moveSelectionToEnd from './moveSelectionToEnd'
 import { startFromScratch, startFromText } from './draft'
 import { Model } from 'dvax'
 import debounce from 'dvax/debounce'
-
+import moment from 'moment'
 function saveNote(noteId,content,callback){
     if(!Model.get('editor').unsaved) return
     Model.run('list',function*({fetch,get,change}){
@@ -15,7 +15,7 @@ function saveNote(noteId,content,callback){
             const res = yield fetch(`note`,{method:'post',body})
             const id = res.data.insert_id
             const notes = get().notes.slice()
-            notes.unshift({content,id})
+            notes.unshift({content,id,modify_time:moment().unix()})
             yield change('notes',notes)
             const editingNoteIndex = get('list').editingNoteIndex
             callback && callback(id)
@@ -35,6 +35,7 @@ export default function() {
     let oldText = ''
     return {
         newNote() {
+            return
             const { noteId, editorState } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
             if(Model.get('editor').unsaved) {

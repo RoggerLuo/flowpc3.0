@@ -4,11 +4,11 @@ import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
 const ItemWrap = styled.div`
-    border-bottom:1px solid transparent;
 `
+//    border-bottom:1px solid #ececec;
 //#ececec
 const Item = styled.div`
-    height: 62px;
+    height: 60px;
     width: 100%;
     display: flex;
     text-align: center;
@@ -38,7 +38,8 @@ const Wrapper = styled.div`
 `
 const getTag = color => styled.div`
     background-color:${color};
-    width:7px;
+    width:10px;
+    margin-right:-10px;
     height:100%;
 `
 function hexToRgba(hex, opacity) { 
@@ -47,9 +48,10 @@ function hexToRgba(hex, opacity) {
 function Category({ list, selectedNoteIdx, selectedCategory }){
     const style = {} //padding:'5px 5px',
     if(selectedNoteIdx!==null) {
-        style.backgroundColor = '#1990fe'
-    }else{
-        style.backgroundColor = '#ececec'
+        style.borderBottom = '1px solid #1990fe'
+    }
+    else{
+        style.borderBottom = '1px solid #ececec'
     }
     const onClick = category => {
         if(selectedNoteIdx!==null) { // 分类note到category
@@ -77,15 +79,16 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
     }
     const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
     return (
-        <Wrapper style={style}>
+        <Wrapper >
             {categoryList.map((el,ind)=>{
                 const Tag = getTag(el.color)
                 const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
                 
                 if(selectedCategory.id === el.id && selectedNoteIdx===null) {
+                    //onClick={()=>onClick(el)}
                     return (
-                        <ItemWrap key={ind} >
-                            <Item onClick={()=>onClick(el)} style={{backgroundColor:selectedColor}}>
+                        <ItemWrap key={ind} style={style}>
+                            <Item style={{backgroundColor:selectedColor}}>
                                 <Tag/>
                                 <ItemText>
                                     <div>{el.name}</div>
@@ -95,8 +98,8 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                     )    
                 }
                 return (
-                    <ItemWrap key={ind}>
-                        <Item onClick={()=>onClick(el)}>
+                    <ItemWrap key={ind} style={style}>
+                        <Item onClick={()=>onClick(el)} >
                             <Tag/>
 
                             <ItemText>

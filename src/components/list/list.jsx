@@ -23,6 +23,7 @@ const LoadingContainer = styled.div`
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 const InserLine = styled.div`
+    user-select:none;
     padding:0px 5px;
     line-height:28px;
     color: #b7b6b6;
@@ -84,7 +85,6 @@ class InfiniteListExample extends React.Component {
                                 </div>
                             )
                         }
-                        
                         return (
                             <div key={index}>
                                 <Note {...this.props} note={note} index={index}/>
