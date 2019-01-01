@@ -11,7 +11,11 @@ function saveNote(noteId,content,callback){
             const res = yield fetch(`note/${noteId}`,{method:'post',body})
             callback && callback()
         }else{ // new
-            const body = {content,category_id:Model.get('category').selectedCategory.id }
+            let category_id = Model.get('category').selectedCategory.id
+            if(category_id === 'all') {
+                category_id = 0
+            }
+            const body = {content,category_id}
             const res = yield fetch(`note`,{method:'post',body})
             const id = res.data.insert_id
             const notes = get().notes.slice()
@@ -35,7 +39,6 @@ export default function() {
     let oldText = ''
     return {
         newNote() {
-            return
             const { noteId, editorState } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
             if(Model.get('editor').unsaved) {
