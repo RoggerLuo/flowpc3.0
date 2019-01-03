@@ -19,7 +19,7 @@ function saveNote(noteId,content,callback){
             const res = yield fetch(`note`,{method:'post',body})
             const id = res.data.insert_id
             const notes = get().notes.slice()
-            notes.unshift({content,id,modify_time:moment().unix()})
+            notes.unshift({category:category_id,content,id,modify_time:moment().unix()})
             yield change('notes',notes)
             const editingNoteIndex = get('list').editingNoteIndex
             callback && callback(id)
