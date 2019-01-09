@@ -59,13 +59,15 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 const note = get('list').notes[selectedNoteIdx]
                 const res = yield fetch(`classify/${note.id}/${category.id}`)
                 if(res.hasErrors) return
-                const notes = get('list').notes.slice()
-                notes.splice(selectedNoteIdx,1)
-                yield change('selectedNoteIdx',null)
-                message.success('分类成功')
-                Model.change('list','notes',notes)
+                if(get('app').selectedListIdx === 0) {
+                    const notes = get('list').notes.slice()
+                    notes.splice(selectedNoteIdx,1)
+                    Model.change('list','notes',notes)    
+                }
                 Model.change('list','editingNoteIndex',null)
                 editorOperations.new()
+                yield change('selectedNoteIdx',null)
+                message.success('分类成功')
             })
         }else{ // 查看分类下的文章
             Model.change('list','query.categoryId',category.id)

@@ -1,11 +1,11 @@
 import React from 'react'
-import List from 'components/list'
+import List from 'components/list_main'
+import ListSimilar from 'components/list_similar'
 import Editor from 'components/editor'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
 import DeleteButton from './delete'
-
 const Body = styled.div`
     width:100%;
     background-color:#e8e8e8;
@@ -26,6 +26,8 @@ class App extends React.Component {
             const res = yield fetch(`categories`)
             yield change('list',res.data)
         })
+
+        // Model.dispatch({type:'listSimilar/getData',noteId:6500,callback(){}})
         // 初始化拉去文章信息
         Model.dispatch({type:'list/getData',callback:(notes)=>{
             // 不用选择第一篇
@@ -51,11 +53,15 @@ class App extends React.Component {
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <List onSelect={this.onSelect}/>
                 </div>
-                
-                <div style={{flex:3}}>
+                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
+                    <ListSimilar onSelect={this.onSelect}/>
+                </div>
+                <div style={{flex:4}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
                     <DeleteButton {...this.props}/>
                 </div>
+
+
             </Body>
         )
     }

@@ -4,6 +4,10 @@
 export default {
     namespace: 'app',
     state: {
+        editingListIdx:0,
+        editingNoteIdx:null,
+
+        selectedListIdx:0,
         selectedNoteIdx:null,
         showSearchPanel: false,
         content: '',
