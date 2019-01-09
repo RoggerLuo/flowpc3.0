@@ -30,14 +30,40 @@ const InserLine = styled.div`
     border-bottom:1px solid #ececec;
     background-color:white;
 `
+const KYContainer = styled.div`
+    background-color:white;
+    padding:6px;
+    border-bottom:1px solid #ececec;
+`
+const Tag = styled.span`
+    padding:0px 5px;
+    display:inline-block;
+`
 class InfiniteListExample extends React.Component {
     state = {}
     render() {
         let weekMark = true
         let monthMark = true
         let threeMonthsMark = true
+
+        const keywords = []
+        this.props.notes.forEach(el=>{
+            el.match_list.forEach(word=>{
+                if(keywords.indexOf(word)===-1) {
+                    keywords.push(word)
+                }
+            })
+        })
         return (
             <Container>
+                
+                <KYContainer>
+                    {keywords.map((el,ind)=>{
+                        return <Tag>{el}</Tag>
+                    })}
+
+                </KYContainer>
+
                 <InfiniteScroll
                     initialLoad={false}
                     pageStart={0}

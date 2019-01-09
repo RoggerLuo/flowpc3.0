@@ -64,14 +64,18 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                     notes.splice(selectedNoteIdx,1)
                     Model.change('list','notes',notes)    
                 }
-                Model.change('list','editingNoteIndex',null)
+                // Model.change('list','editingNoteIndex',null)
+                Model.change('app','editingNoteIdx',null)
+
                 editorOperations.new()
                 yield change('selectedNoteIdx',null)
                 message.success('分类成功')
             })
         }else{ // 查看分类下的文章
             Model.change('list','query.categoryId',category.id)
-            Model.change('list','editingNoteIndex',null)
+            // Model.change('list','editingNoteIndex',null)
+            Model.change('app','editingNoteIdx',null)
+
             editorOperations.new()
             Model.change('list','hasMore',true)
             Model.dispatch({type:'list/getData',callback(){

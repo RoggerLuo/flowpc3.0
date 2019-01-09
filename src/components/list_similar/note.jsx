@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import moment  from 'moment'
+import Gap from 'dvax/gap'
 const Wrapper = styled.div`
     margin-bottom:1px;
     padding:15px 10px 15px 10px;
@@ -23,10 +24,15 @@ const Content = styled.div`
     overflow: hidden;
 `
 const Text = styled.div`
+    overflow: hidden;
 `
 const SmallText = styled.div`
     color: #888888;
     font-size: 12px;
+`
+const Keywords = styled.div`
+    font-size: 16px;
+    color:black;
 `
 function getFirstLine(string){
     if(string.indexOf('\n')!==-1) {
@@ -83,6 +89,8 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
     return (
         <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
             <Content>
+                <Keywords>{note.match_list.join(' ')}</Keywords>
+                {Gap(8)}
                 <Text>{fisrtLine}</Text>
                 <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
             </Content>
