@@ -71,30 +71,32 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
             <WrapperBlue onClick={select} onDoubleClick={onDoubleClick}>
                 <Content>
                     <Text style={{color:'white'}}>{fisrtLine}</Text>
-                    <SmallText style={{color:'white'}}>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
                 </Content>
             </WrapperBlue>
-        )    
-    }
-    if(note.category === selectedCategory.id && selectedCategory.id!==0) {
-        return (
-            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
-                <Content>
-                    <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
-                    <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
-                </Content>
-            </Wrapper>
         )    
     }
     return (
         <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
             <Content>
-                <Keywords>{note.match_list.join(' ')}</Keywords>
-                {Gap(8)}
                 <Text>{fisrtLine}</Text>
-                <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
             </Content>
         </Wrapper>
     )
 }
 export default Note
+/*
+    if(note.category === selectedCategory.id && selectedCategory.id!==0) {
+        return (
+            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
+                <Content>
+                    <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
+                </Content>
+            </Wrapper>
+        )    
+    }
+
+                <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
+
+{Gap(8)}                
+<Keywords>{note.match_list.join(' ')}</Keywords>
+ */

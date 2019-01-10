@@ -32,15 +32,36 @@ const InserLine = styled.div`
 `
 const KYContainer = styled.div`
     background-color:white;
-    padding:6px;
+    padding:12px;
     border-bottom:1px solid #ececec;
 `
 const Tag = styled.span`
     padding:0px 5px;
     display:inline-block;
+    font-size: 16px;
+    color:black;
+    user-select:none;
+    cursor:pointer;
 `
 class InfiniteListExample extends React.Component {
     state = {}
+    cancelNoteSelect = () => {
+        if(Model.get('app').editingListIdx === 1) {
+            Model.change('app','editingNoteIdx',null)
+        }
+    }
+    unselect = ind => {
+        const list = this.props.keywordsList.slice()
+        list.splice(list.indexOf(ind),1)
+        Model.change('listSimilar','keywordsList',list)
+        this.cancelNoteSelect()
+    }
+    select = ind => {
+        const list = this.props.keywordsList.slice()
+        list.push(ind)
+        Model.change('listSimilar','keywordsList',list)
+        this.cancelNoteSelect()
+    }
     render() {
         let weekMark = true
         let monthMark = true
@@ -56,13 +77,19 @@ class InfiniteListExample extends React.Component {
         })
         return (
             <Container>
-                
-                <KYContainer>
-                    {keywords.map((el,ind)=>{
-                        return <Tag>{el}</Tag>
-                    })}
+                {
+                    keywords.length?
+                        <KYContainer>
+                            { keywords.map((el,ind)=>{
+                                if(this.props.keywordsList.indexOf(ind)!==-1) {
+                                    return <Tag onClick={e=>this.unselect(ind)} style={{ background: '#CCC',color: 'white'}} key={ind}>{el}</Tag>
+                                }
+                                return <Tag onClick={e=>this.select(ind)} key={ind}>{el}</Tag>
+                            })}
 
-                </KYContainer>
+                        </KYContainer>
+                        :null
+                }
 
                 <InfiniteScroll
                     initialLoad={false}
@@ -71,51 +98,54 @@ class InfiniteListExample extends React.Component {
                     hasMore={!this.props.loading && this.props.hasMore}
                     useWindow={false}
                 >
-                    {this.props.notes.map((note,index) => {
-                        
-                        if(
-                            (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*7 &&
-                            (Date.parse(new Date())/1000  - note.modify_time  ) < 60*60*24*30 &&
-                            weekMark
-                        ) {
-                            weekMark = false
+                    {this.props.notes
+                        .filter(note=>this.props.keywordsList.every(el_idx=>{
+                            return note.match_list.indexOf(keywords[el_idx])!==-1
+                        }))
+                        .map((note,index) => {
+                            if(
+                                (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*7 &&
+                                (Date.parse(new Date())/1000  - note.modify_time  ) < 60*60*24*30 &&
+                                weekMark
+                            ) {
+                                weekMark = false
+                                return (
+                                    <div key={index}>
+                                        <InserLine>一周以前</InserLine>
+                                        <Note {...this.props} note={note} index={index}/>
+                                    </div>
+                                )
+                            }
+                            if(
+                                (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*30 &&
+                                (Date.parse(new Date())/1000  - note.modify_time  ) < 60*60*24*90 &&
+                                monthMark
+                            ) {
+                                monthMark = false
+                                return (
+                                    <div key={index}>
+                                        <InserLine>一个月以前</InserLine>
+                                        <Note {...this.props} note={note} index={index}/>
+                                    </div>
+                                )
+                            }
+                            if(
+                                (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*90 &&
+                                threeMonthsMark
+                            ) {
+                                threeMonthsMark = false
+                                return (
+                                    <div key={index}>
+                                        <InserLine>三个月以前</InserLine>
+                                        <Note {...this.props} note={note} index={index}/>
+                                    </div>
+                                )
+                            }
                             return (
                                 <div key={index}>
-                                    <InserLine>一周以前</InserLine>
                                     <Note {...this.props} note={note} index={index}/>
                                 </div>
                             )
-                        }
-                        if(
-                            (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*30 &&
-                            (Date.parse(new Date())/1000  - note.modify_time  ) < 60*60*24*90 &&
-                            monthMark
-                        ) {
-                            monthMark = false
-                            return (
-                                <div key={index}>
-                                    <InserLine>一个月以前</InserLine>
-                                    <Note {...this.props} note={note} index={index}/>
-                                </div>
-                            )
-                        }
-                        if(
-                            (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*90 &&
-                            threeMonthsMark
-                        ) {
-                            threeMonthsMark = false
-                            return (
-                                <div key={index}>
-                                    <InserLine>三个月以前</InserLine>
-                                    <Note {...this.props} note={note} index={index}/>
-                                </div>
-                            )
-                        }
-                        return (
-                            <div key={index}>
-                                <Note {...this.props} note={note} index={index}/>
-                            </div>
-                        )
                     })}
                 </InfiniteScroll>
                 {this.props.loading && this.props.hasMore && (<LoadingContainer><Spin/></LoadingContainer>)}

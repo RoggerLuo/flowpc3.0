@@ -3,6 +3,7 @@ import invariant from 'invariant'
 export default {
     namespace: 'listSimilar',
     state: {
+        keywordsList:[],
         notes: [],
         editingNoteIndex: null,
         loading:false,

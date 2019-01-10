@@ -23,6 +23,7 @@ const Content = styled.div`
     overflow: hidden;
 `
 const Text = styled.div`
+    overflow: hidden;
 `
 const SmallText = styled.div`
     color: #888888;
@@ -51,6 +52,7 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
 
         Model.dispatch({type:'listSimilar/getData',noteId:note.id,callback(){}})
         onSelect(note)
+        Model.change('listSimilar','keywordsList',[]) 
     }
     function onDoubleClick(){
         Model.change('app','selectedListIdx',0)

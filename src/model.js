@@ -4,7 +4,7 @@
 export default {
     namespace: 'app',
     state: {
-        editingListIdx:0,
+        editingListIdx:0, //list
         editingNoteIdx:null,
 
         selectedListIdx:0,
