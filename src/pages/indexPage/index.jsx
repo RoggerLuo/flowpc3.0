@@ -22,7 +22,12 @@ const EWindow = styled.div`
     min-height: 100px;
     background: white;
 `
-const temp = {}
+const temp = {
+}
+const location = {
+    top:0,
+    left:0
+}
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -69,7 +74,7 @@ class App extends React.Component {
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <ListSimilar onSelect={this.onSelect}/>
                 </div>
-                <EWindow style={this.props.location}>
+                <EWindow style={location}>
                     <div style={{background:'#ccc',width:'100%',height:'30px'}} 
                         onMouseDown={e=>{
                             temp.isIn = true
@@ -83,10 +88,11 @@ class App extends React.Component {
                             if(temp.isIn) {
                                 const distantX = e.pageX - temp.x
                                 const distantY = e.pageY - temp.y
-                                const location = Model.get('editorWindow').location
                                 console.log(distantX+location.left)
-                                Model.change('editorWindow','location.left',distantX+location.left)
-                                Model.change('editorWindow','location.top',distantY+location.top)
+                                const pa = e.target.parentNode
+                                pa.style.left = pa.style.left.slice(0,-2) + distantX + 'px'
+                                // location.left = distantX+location.left
+                                // location.top = distantY+location.top
                             }
                         }
                     }></div>
