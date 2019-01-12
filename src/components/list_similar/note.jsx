@@ -52,7 +52,7 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
     const select = e => {
         Model.change('app','editingListIdx',1) //similar
         Model.change('app','editingNoteIdx',index)
-        // Model.dispatch({ type: 'listSimilar/select', editingNoteIdx:index })
+        Model.change('app','editingNote',note)
         Model.change('app','selectedNoteIdx',null)
         onSelect(note)
     }

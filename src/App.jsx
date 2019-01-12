@@ -10,7 +10,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={{height:'100%',justifyContent: 'space-between',display:'flex'}}>
-                <Header {...this.props} {...this.state} handleClick={this.handleClick}/>
+                <Header {...this.state} handleClick={this.handleClick}/>
                 {(()=>{
                     if(this.state.current==='category') {
                         return <CategoryPage/>
@@ -21,4 +21,6 @@ class App extends React.Component {
         )
     }
 }
-export default Model.connect(['category','editor'])(App)
+export default App
+// Model.connect(['category','editor'])(
+// {...this.props}

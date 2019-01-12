@@ -28,6 +28,7 @@ const Text = styled.div`
 const SmallText = styled.div`
     color: #888888;
     font-size: 12px;
+    text-align: right;
 `
 function getFirstLine(string){
     if(string.indexOf('\n')!==-1) {
@@ -47,7 +48,7 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
     const select = e => {
         Model.change('app','editingListIdx',0)
         Model.change('app','editingNoteIdx',index)
-        // Model.dispatch({ type: 'list/select', editingNoteIdx:index })
+        Model.change('app','editingNote',note)
         Model.change('app','selectedNoteIdx',null)
 
         Model.dispatch({type:'listSimilar/getData',noteId:note.id,callback(){}})
@@ -69,7 +70,7 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
             <WrapperBlue onClick={select} onDoubleClick={onDoubleClick}>
                 <Content>
                     <Text style={{color:'white'}}>{fisrtLine}</Text>
-                    <SmallText style={{color:'white'}}>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
+                    
                 </Content>
             </WrapperBlue>
         )    
@@ -79,7 +80,6 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
             <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
                 <Content>
                     <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
-                    <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
                 </Content>
             </Wrapper>
         )    
@@ -88,9 +88,17 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
         <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
             <Content>
                 <Text>{fisrtLine}</Text>
-                <SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
             </Content>
         </Wrapper>
     )
 }
 export default Note
+
+
+/* 
+<SmallText style={{color:'white'}}>{moment(note.modify_time*1000).format('YYYY-MM-DD')} </SmallText>
+<SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} </SmallText>
+
+{secondLine}
+{secondLine}
+{secondLine} */

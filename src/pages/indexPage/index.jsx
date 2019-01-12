@@ -2,6 +2,7 @@ import React from 'react'
 import List from 'components/list_main'
 import ListSimilar from 'components/list_similar'
 import Editor from 'components/editor'
+import EditorWindow from 'components/editorWindow'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
@@ -15,6 +16,13 @@ const Body = styled.div`
     overflow-y:auto;
     display:flex;
 `
+const EWindow = styled.div`
+    position: absolute;
+    min-width: 400px;
+    min-height: 100px;
+    background: white;
+`
+const temp = {}
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -46,24 +54,46 @@ class App extends React.Component {
         }
         return (
             <Body>
-                <div style={{flex:1,borderRight:'1px solid #ccc'}}>
+                <div style={{flex:1.2,borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
                 
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <List onSelect={this.onSelect}/>
                 </div>
-                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
-                    <ListSimilar onSelect={this.onSelect}/>
-                </div>
-                <div style={{flex:4}}>
+                <div style={{flex:3}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
                     <DeleteButton {...this.props}/>
                 </div>
 
-
+                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
+                    <ListSimilar onSelect={this.onSelect}/>
+                </div>
+                <EWindow style={this.props.location}>
+                    <div style={{background:'#ccc',width:'100%',height:'30px'}} 
+                        onMouseDown={e=>{
+                            temp.isIn = true
+                            temp.x = e.pageX
+                            temp.y = e.pageY
+                        }}
+                        onMouseUp={e=>{
+                            temp.isIn = false
+                        }}
+                        onMouseMove={e=>{
+                            if(temp.isIn) {
+                                const distantX = e.pageX - temp.x
+                                const distantY = e.pageY - temp.y
+                                const location = Model.get('editorWindow').location
+                                console.log(distantX+location.left)
+                                Model.change('editorWindow','location.left',distantX+location.left)
+                                Model.change('editorWindow','location.top',distantY+location.top)
+                            }
+                        }
+                    }></div>
+                    <EditorWindow deliver={Deliver(this.interfaces)}/>
+                </EWindow>
             </Body>
         )
     }
 }
-export default Model.connect(['category','app'])(App)
+export default Model.connect(['category','app','editorWindow'])(App)

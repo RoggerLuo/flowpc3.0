@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {editorOperations} from 'components/editor'
 import {Model} from 'dvax'
+import moment from 'moment'
 const Wrapper = styled.div`
     width:100%;
     height:41px;
@@ -16,12 +17,18 @@ const Item = styled.div`
     padding: 0px 10px;
     font-weight:500;
 `
-function Header ({handleClick,current,selectedCategory,unsaved}) {
+function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
     function enterCategoryEditing(){
         Model.change('list','editingNoteIndex',null)
         editorOperations.new()
         handleClick({key:'category'})
     }
+    
+    let modify_time = ''
+    if(props.editingNote.modify_time) {
+        modify_time = moment(props.editingNote.modify_time*1000).format('YY年M月D日 HH:mm')
+    }
+    
     return (
         <Wrapper>
             <div style={{flex:1,display:'flex',justifyContent:'space-between'}}>
@@ -44,7 +51,7 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
             
             <div style={{flex:2}}>
                 <Item>
-
+                    {modify_time}
                 </Item>
             </div>
             <div style={{flex:3}}>
@@ -64,4 +71,5 @@ function Header ({handleClick,current,selectedCategory,unsaved}) {
         </Wrapper>
     )
 }
-export default Header
+export default Model.connect(['app'])(Header)
+
