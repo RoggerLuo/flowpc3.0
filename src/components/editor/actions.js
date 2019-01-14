@@ -3,7 +3,15 @@ import { startFromScratch, startFromText } from './draft'
 import { Model } from 'dvax'
 import debounce from 'dvax/debounce'
 import moment from 'moment'
-import { message } from 'antd';
+function updateNoteInList(list_namespace,newText){
+    const editingNote = Model.get('app').editingNote
+    const notes = Model.get(list_namespace).notes
+    const __editingNote = notes.find(el=>el.id===editingNote.id)
+    if(__editingNote) {
+        const idx = notes.indexOf(__editingNote)
+        Model.change(list_namespace,`notes[${idx}].content`,newText)    
+    }
+}
 function saveNote(noteId,content,callback){
     if(!Model.get('editor').unsaved) return
     Model.run('list',function*({fetch,get,change}){
@@ -20,65 +28,38 @@ function saveNote(noteId,content,callback){
             const res = yield fetch(`note`,{method:'post',body})
             const id = res.data.insert_id
             const notes = get().notes.slice()
-            notes.unshift({category:category_id,content,id,modify_time:moment().unix()})
+            const new_note = {category:category_id,content,id,modify_time:moment().unix()}
+            notes.unshift(new_note)
             yield change('notes',notes)
             const editingNoteIdx = get('app').editingNoteIdx
             callback && callback(id)
-            if(editingNoteIdx!==null) {
-                Model.change('app','editingNoteIdx',editingNoteIdx+1)
-            }else{
-                Model.change('app','editingNoteIdx',0)
-            }
+            // if(editingNoteIdx!==null) {
+            //     Model.change('app','editingNoteIdx',editingNoteIdx+1)
+            // }else{
+                // Model.change('app','editingNoteIdx',0)
+            Model.change('app','editingNote',new_note)
+            // }
         }
     })
 }
-// let saveNoteDebouce = ()=>{}
-
 export default function() {
     const self = this
     let oldText = ''
-    const innerTemp = {
-        saveNoteDebouce(){
-        }
-    }
+    const innerTemp = {saveNoteDebouce(){}}
     return {
         newNote() {
             const { noteId, editorState } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
             if(Model.get('editor').unsaved) {
                 saveNote(noteId,newText)
-            }
-            Model.change('app','editingNoteIdx',null)
+            }   
+            Model.change('app','editingNote',{})
             self.state.inputDOM.blur()            
             self.setState({ editorState: startFromScratch(), noteId:'new' }, () => {
                 self.state.inputDOM.focus()
             })
         },
         replace(note) {
-
-            /* debugger
-            if(Model.get('editor').unsaved) {
-                const { noteId, editorState } = self.state
-                const newText = editorState.getCurrentContent().getPlainText()
-                debugger
-                if(noteId==='new' && newText==='') return // 新建而且为空就不保存
-                self.setState({ editorState }, () => {
-                    if (newText !== oldText) {
-                        Model.change('editor', 'unsaved', true)
-                        oldText = newText
-                        const idx = Model.get('app').editingNoteIdx
-                        if(idx!==null) { 
-                            Model.change('list',`notes[${idx}].content`,newText)
-                        }
-                    }
-                })
-                saveNote(noteId,newText,insertId=>{
-                    Model.change('editor', 'unsaved', false)
-                    if(insertId) { //如果是新建
-                        self.setState({noteId:insertId})
-                    }
-                })
-            } */
             innerTemp.saveNoteDebouce = debounce(saveNote,1500)
             const _editorState = startFromText(note.content)
             oldText = _editorState.getCurrentContent().getPlainText()
@@ -92,10 +73,8 @@ export default function() {
                 if (newText !== oldText) {
                     Model.change('editor', 'unsaved', true)
                     oldText = newText
-                    const idx = Model.get('app').editingNoteIdx
-                    if(idx!==null) {        
-                        Model.change('list',`notes[${idx}].content`,newText)
-                    }
+                    updateNoteInList('list',newText)
+                    updateNoteInList('listSimilar',newText)
                 }
             })
             innerTemp.saveNoteDebouce(noteId,newText,insertId=>{
@@ -124,16 +103,6 @@ export default function() {
         },
         deleteNote() {
             return
-            // const { itemId, editorState } = self.state
-            // // 构建hint
-            // let content = editorState.getCurrentContent().getPlainText()
-            // if (content.length > 20) {
-            //     content = content.slice(0, 20) + '...'
-            // }
-            // if (!confirm(`确定要删除当前文章吗?\n"${content}"`)) return
-            // // 发送请求，执行callback
-            // const callback = () => self.props.onDelete(itemId)
-            // Model.dispatch({ type: 'editor/delete', itemId, callback })
         },
     }
 }

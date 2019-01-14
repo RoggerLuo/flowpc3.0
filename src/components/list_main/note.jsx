@@ -46,9 +46,8 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
     const isSelected = index === selectedNoteIdx && selectedListIdx === 0
     const isEditing = index === editingNoteIdx && editingListIdx === 0
     const select = e => {
-
         Model.change('app','editingListIdx',0)
-        Model.change('app','editingNoteIdx',index)
+        // Model.change('app','editingNoteIdx',index)
         Model.change('app','editingNote',note)
         Model.change('app','selectedNoteIdx',null)
 

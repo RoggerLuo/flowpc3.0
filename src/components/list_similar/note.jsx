@@ -37,13 +37,12 @@ function getFirstLine(string){
     }
     return [string,'']
 }
-function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingListIdx,selectedListIdx,selectedCategory }){
+function Note({ onSelect, editingNote, index, selectedNoteIdx, note,editingListIdx,selectedListIdx,selectedCategory }){
     const isSelected = index === selectedNoteIdx && selectedListIdx === 1
-    const isEditing = index === editingNoteIdx && editingListIdx === 1
+    const isEditing = note.id === editingNote.id && editingListIdx === 1
     const select = e => {
-
         Model.change('app','editingListIdx',1) // similar
-        Model.change('app','editingNoteIdx',index)
+        // Model.change('app','editingNoteIdx',index)
         Model.change('app','editingNote',note)
         Model.change('app','selectedNoteIdx',null)
         onSelect(note)
@@ -76,19 +75,3 @@ function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingLi
     )
 }
 export default Note
-/*
-if(note.category === selectedCategory.id && selectedCategory.id!==0) {
-    return (
-        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
-            <Content>
-                <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
-            </Content>
-        </Wrapper>
-    )    
-}
-
-<SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} {secondLine}</SmallText>
-
-{Gap(8)}                
-<Keywords>{note.match_list.join(' ')}</Keywords>
- */

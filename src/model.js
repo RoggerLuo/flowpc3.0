@@ -7,6 +7,7 @@ export default {
         editingListIdx:0, //list
         editingNoteIdx:null,
         editingNote:{},
+        
         selectedListIdx:0,
         selectedNoteIdx:null,
 

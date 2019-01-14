@@ -2,7 +2,6 @@ import React from 'react'
 import List from 'components/list_main'
 import ListSimilar from 'components/list_similar'
 import Editor from 'components/editor'
-import EditorWindow from 'components/editorWindow'
 import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
@@ -33,15 +32,8 @@ class App extends React.Component {
             const res = yield fetch(`categories`)
             yield change('list',res.data)
         })
-
-        // Model.dispatch({type:'listSimilar/getData',noteId:6500,callback(){}})
         // 初始化拉去文章信息
-        Model.dispatch({type:'list/getData',callback:(notes)=>{
-            // 不用选择第一篇
-            // if (notes[0]) {
-            //     this.interfaces.replace(notes[0])
-            // }
-        }})
+        Model.dispatch({type:'list/getData',callback(){}})
     }
     render(){
         const Deliver = (obj) => {
@@ -73,9 +65,3 @@ class App extends React.Component {
     }
 }
 export default Model.connect(['category','app','editorWindow'])(App)
-/* 
-                    <EWindow>
-                        <div style={{background:'#ccc',width:'100%',height:'30px'}}></div>
-                        <EditorWindow deliver={Deliver(this.interfaces)}/>
-                    </EWindow>
- */
