@@ -64,7 +64,6 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                     notes.splice(selectedNoteIdx,1)
                     Model.change('list','notes',notes)    
                 }
-                // Model.change('list','editingNoteIndex',null)
                 Model.change('app','editingNoteIdx',null)
 
                 editorOperations.new()
@@ -73,7 +72,6 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
             })
         }else{ // 查看分类下的文章
             Model.change('list','query.categoryId',category.id)
-            // Model.change('list','editingNoteIndex',null)
             Model.change('app','editingNoteIdx',null)
 
             editorOperations.new()

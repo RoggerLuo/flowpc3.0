@@ -5,7 +5,6 @@ export default {
     state: {
         keywordsList:[],
         notes: [],
-        editingNoteIndex: null,
         loading:false,
         hasMore:true,
         query:{
@@ -17,9 +16,6 @@ export default {
     reducers: {
         fetch(state,{ notes }) {
             return { ...state, notes }
-        },
-        select(state,{ editingNoteIndex }) {
-            return { ...state, editingNoteIndex }
         },
         add(state,{ note }) {
             const notes = [note,...state.notes]

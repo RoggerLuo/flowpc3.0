@@ -22,12 +22,6 @@ const EWindow = styled.div`
     min-height: 100px;
     background: white;
 `
-const temp = {
-}
-const location = {
-    top:0,
-    left:0
-}
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -74,32 +68,14 @@ class App extends React.Component {
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <ListSimilar onSelect={this.onSelect}/>
                 </div>
-                <EWindow style={location}>
-                    <div style={{background:'#ccc',width:'100%',height:'30px'}} 
-                        onMouseDown={e=>{
-                            temp.isIn = true
-                            temp.x = e.pageX
-                            temp.y = e.pageY
-                        }}
-                        onMouseUp={e=>{
-                            temp.isIn = false
-                        }}
-                        onMouseMove={e=>{
-                            if(temp.isIn) {
-                                const distantX = e.pageX - temp.x
-                                const distantY = e.pageY - temp.y
-                                console.log(distantX+location.left)
-                                const pa = e.target.parentNode
-                                pa.style.left = pa.style.left.slice(0,-2) + distantX + 'px'
-                                // location.left = distantX+location.left
-                                // location.top = distantY+location.top
-                            }
-                        }
-                    }></div>
-                    <EditorWindow deliver={Deliver(this.interfaces)}/>
-                </EWindow>
             </Body>
         )
     }
 }
 export default Model.connect(['category','app','editorWindow'])(App)
+/* 
+                    <EWindow>
+                        <div style={{background:'#ccc',width:'100%',height:'30px'}}></div>
+                        <EditorWindow deliver={Deliver(this.interfaces)}/>
+                    </EWindow>
+ */

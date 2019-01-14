@@ -19,19 +19,19 @@ const Item = styled.div`
 `
 function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
     function enterCategoryEditing(){
-        Model.change('list','editingNoteIndex',null)
+        Model.change('app','editingNoteIdx',null)
         editorOperations.new()
         handleClick({key:'category'})
     }
     
     let modify_time = ''
     if(props.editingNote.modify_time) {
-        modify_time = moment(props.editingNote.modify_time*1000).format('YY年M月D日 HH:mm')
+        modify_time = moment(props.editingNote.modify_time*1000).format('YYYY年M月D日 HH:mm')
     }
     
     return (
         <Wrapper>
-            <div style={{flex:1,display:'flex',justifyContent:'space-between'}}>
+            <div style={{flex:1.2,display:'flex',justifyContent:'space-between'}}>
                 {
                         current==='index'?
                         <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={enterCategoryEditing}>
@@ -51,7 +51,6 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
             
             <div style={{flex:2}}>
                 <Item>
-                    {modify_time}
                 </Item>
             </div>
             <div style={{flex:3}}>
@@ -59,15 +58,27 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
                     <Item onClick={()=>editorOperations.new()} style={{cursor:'pointer'}}>
                         新建
                     </Item>
+
                     <Item>
                         {
-                            unsaved?
-                                <div style={{color:'orange'}}>未保存</div>:
-                                <div style={{color:'#ccc'}}>已保存</div>
+                            // unsaved?
+                            //     <div style={{color:'orange'}}>未保存</div>:
+                            //     <div style={{color:'#ccc'}}>已保存</div>
                         }
                     </Item>
+
+                    <Item style={{color:'#ccc'}}>
+                        {modify_time}
+                    </Item>
+
                 </div>
             </div>
+            <div style={{flex:2}}>
+                <Item>
+                </Item>
+
+            </div>
+
         </Wrapper>
     )
 }
