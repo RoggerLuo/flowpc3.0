@@ -54,12 +54,12 @@ class App extends React.Component {
                 </div>
                 <div style={{flex:3}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
-                    <DeleteButton {...this.props}/>
                 </div>
 
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <ListSimilar onSelect={this.onSelect}/>
                 </div>
+                <DeleteButton {...this.props}/>
             </Body>
         )
     }

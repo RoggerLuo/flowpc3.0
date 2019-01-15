@@ -42,22 +42,20 @@ function getFirstLine(string){
     }
     return [string,'']
 }
-function Note({ onSelect, editingNoteIdx, index, selectedNoteIdx, note,editingListIdx,selectedListIdx,selectedCategory }){
-    const isSelected = index === selectedNoteIdx && selectedListIdx === 0
-    const isEditing = index === editingNoteIdx && editingListIdx === 0
+function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selectedListIdx,selectedCategory }){
+    const isSelected = note.id === selectedNote.id && selectedListIdx === 0
+    const isEditing = note.id === editingNote.id && editingListIdx === 0
     const select = e => {
         Model.change('app','editingListIdx',0)
-        // Model.change('app','editingNoteIdx',index)
         Model.change('app','editingNote',note)
-        Model.change('app','selectedNoteIdx',null)
-
+        Model.change('app','selectedNote',{})
         Model.dispatch({type:'listSimilar/getData',noteId:note.id,callback(){}})
         onSelect(note)
         Model.change('listSimilar','keywordsList',[]) 
     }
     function onDoubleClick(){
         Model.change('app','selectedListIdx',0)
-        Model.change('app','selectedNoteIdx',index)
+        Model.change('app','selectedNote',note)
     }
     const wrapperStyle = {}
     if(isEditing) {

@@ -33,12 +33,7 @@ function saveNote(noteId,content,callback){
             yield change('notes',notes)
             const editingNoteIdx = get('app').editingNoteIdx
             callback && callback(id)
-            // if(editingNoteIdx!==null) {
-            //     Model.change('app','editingNoteIdx',editingNoteIdx+1)
-            // }else{
-                // Model.change('app','editingNoteIdx',0)
             Model.change('app','editingNote',new_note)
-            // }
         }
     })
 }

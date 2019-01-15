@@ -9,7 +9,7 @@ export default {
         editingNote:{},
         
         selectedListIdx:0,
-        selectedNoteIdx:null,
+        selectedNote:{},
 
         
         showSearchPanel: false,

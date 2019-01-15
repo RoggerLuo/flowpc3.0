@@ -3,10 +3,8 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
-const ItemWrap = styled.div`
-`
-//    border-bottom:1px solid #ececec;
-//#ececec
+import updateList from './updateList'
+const ItemWrap = styled.div``
 const Item = styled.div`
     height: 60px;
     width: 100%;
@@ -45,34 +43,32 @@ const getTag = color => styled.div`
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
 }
-function Category({ list, selectedNoteIdx, selectedCategory }){
+function Category({ list, selectedNote, selectedCategory }){
     const style = {} //padding:'5px 5px',
-    if(selectedNoteIdx!==null) {
+    if(selectedNote.id) {
         style.borderBottom = '1px solid #1990fe'
     }
     else{
         style.borderBottom = '1px solid #ececec'
     }
     const onClick = category => {
-        if(selectedNoteIdx!==null) { // 分类note到category
+        if(selectedNote.id) { // 分类note到category
             Model.run('app',function*({fetch,get,change}){
                 const note = get('list').notes[selectedNoteIdx]
                 const res = yield fetch(`classify/${note.id}/${category.id}`)
                 if(res.hasErrors) return
                 if(get('app').selectedListIdx === 0) {
-                    const notes = get('list').notes.slice()
-                    notes.splice(selectedNoteIdx,1)
-                    Model.change('list','notes',notes)    
+                    updateList('list')
                 }
-                Model.change('app','editingNoteIdx',null)
-
-                editorOperations.new()
-                yield change('selectedNoteIdx',null)
+                Model.change('app','editingNote',{})
+                Mode.change('app','selectedNote',{})
                 message.success('分类成功')
+                editorOperations.new()
+
             })
         }else{ // 查看分类下的文章
             Model.change('list','query.categoryId',category.id)
-            Model.change('app','editingNoteIdx',null)
+            Model.change('app','editingNote',{})
 
             editorOperations.new()
             Model.change('list','hasMore',true)
@@ -88,7 +84,7 @@ function Category({ list, selectedNoteIdx, selectedCategory }){
                 const Tag = getTag(el.color)
                 const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
                 
-                if(selectedCategory.id === el.id && selectedNoteIdx===null) {
+                if(selectedCategory.id === el.id && selectedNote.id) {
                     //onClick={()=>onClick(el)}
                     return (
                         <ItemWrap key={ind} style={style}>

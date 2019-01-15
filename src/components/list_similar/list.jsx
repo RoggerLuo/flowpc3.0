@@ -47,20 +47,23 @@ class InfiniteListExample extends React.Component {
     state = {}
     cancelNoteSelect = () => {
         if(Model.get('app').editingListIdx === 1) {
-            Model.change('app','editingNoteIdx',null)
+            Model.change('app','editingNote',{})
         }
     }
-    unselect = ind => {
-        const list = this.props.keywordsList.slice()
-        list.splice(list.indexOf(ind),1)
-        Model.change('listSimilar','keywordsList',list)
+    unselect = word => {
+        const list = this.props.selectedKeywords.slice()
+        list.splice(list.indexOf(word),1)
+        Model.change('listSimilar','selectedKeywords',list)
         this.cancelNoteSelect()
     }
-    select = ind => {
-        const list = this.props.keywordsList.slice()
-        list.push(ind)
-        Model.change('listSimilar','keywordsList',list)
+    select = word => {
+        const list = this.props.selectedKeywords.slice()
+        list.push(word)
+        Model.change('listSimilar','selectedKeywords',list)
         this.cancelNoteSelect()
+        // Model.run('',function*({fetch}){
+        //     const res = yield fetch(`keyword`,{method:'post',body:{word}})
+        // })
     }
     render() {
         let weekMark = true
@@ -80,13 +83,12 @@ class InfiniteListExample extends React.Component {
                 {
                     keywords.length?
                         <KYContainer>
-                            { keywords.map((el,ind)=>{
-                                if(this.props.keywordsList.indexOf(ind)!==-1) {
-                                    return <Tag onClick={e=>this.unselect(ind)} style={{ background: '#CCC',color: 'white'}} key={ind}>{el}</Tag>
+                            { keywords.map((word,ind)=>{
+                                if(this.props.selectedKeywords.indexOf(word) !== -1) {
+                                    return <Tag onClick={e=>this.unselect(word)} style={{ background: '#CCC',color: 'white'}} key={ind}>{word}</Tag>
                                 }
-                                return <Tag onClick={e=>this.select(ind)} key={ind}>{el}</Tag>
+                                return <Tag onClick={e=>this.select(word)} key={ind}>{word}</Tag>
                             })}
-
                         </KYContainer>
                         :null
                 }
@@ -99,9 +101,11 @@ class InfiniteListExample extends React.Component {
                     useWindow={false}
                 >
                     {this.props.notes
-                        .filter(note=>this.props.keywordsList.every(el_idx=>{
-                            return note.match_list.indexOf(keywords[el_idx])!==-1
-                        }))
+                        .filter(note=>{
+                            return this.props.selectedKeywords.every(word=>{ //every
+                                return note.match_list.indexOf(word)!==-1
+                            })
+                        })
                         .map((note,index) => {
                             if(
                                 (Date.parse(new Date())/1000  - note.modify_time  ) > 60*60*24*7 &&
