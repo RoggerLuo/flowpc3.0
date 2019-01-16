@@ -68,7 +68,6 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
             <WrapperBlue onClick={select} onDoubleClick={onDoubleClick}>
                 <Content>
                     <Text style={{color:'white'}}>{fisrtLine}</Text>
-                    
                 </Content>
             </WrapperBlue>
         )    
