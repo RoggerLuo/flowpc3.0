@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {editorOperations} from 'components/editor'
 import {Model} from 'dvax'
 import moment from 'moment'
+import { Input } from 'antd'
+const Search = Input.Search
 const Wrapper = styled.div`
     width:100%;
     height:41px;
@@ -23,24 +25,28 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
         editorOperations.new()
         handleClick({key:'category'})
     }
-    
     let modify_time = ''
     if(props.editingNote.modify_time) {
         modify_time = moment(props.editingNote.modify_time*1000).format('YYYY年M月D日 HH:mm')
     }
-    
+    //
     return (
         <Wrapper>
-            <div style={{flex:1.2,display:'flex',justifyContent:'space-between'}}>
+            <div style={{flex:3.2,display:'flex',justifyContent:'space-between'}}>
                 {
-                        current==='index'?
-                        <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={enterCategoryEditing}>
-                            {current==='index'? '编辑分类':null}
-                        </div>:
-                        <div onClick={()=>handleClick({key:'index'})} style={{padding:'0px 13px',cursor:'pointer'}}>返回</div>
+                    current==='index'?
+                    <div style={{padding:'0px 13px',color:'#ccc',cursor:'pointer'}} onClick={enterCategoryEditing}>
+                        {current==='index'? '编辑分类':null}
+                    </div>:
+                    <div onClick={()=>handleClick({key:'index'})} style={{padding:'0px 13px',cursor:'pointer'}}>返回</div>
                 }
-
                 <Item>
+                    <Search
+                        placeholder="input search text"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 200 }}
+                    />
+
                     {null
                         // current==='index'?
                         // <div>{selectedCategory.name||'Uncategorized'}</div>:
@@ -48,17 +54,15 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
                     }
                 </Item>
             </div>
-            
-            <div style={{flex:2}}>
+            {/* <div style={{flex:2}}>
                 <Item>
                 </Item>
-            </div>
+            </div> */}
             <div style={{flex:3}}>
                 <div style={{display:'flex',justifyContent:'space-between'}}>
                     <Item onClick={()=>editorOperations.new()} style={{cursor:'pointer'}}>
                         新建
                     </Item>
-
                     <Item>
                         {
                             // unsaved?
@@ -66,19 +70,15 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
                             //     <div style={{color:'#ccc'}}>已保存</div>
                         }
                     </Item>
-
                     <Item style={{color:'#ccc'}}>
                         {modify_time}
                     </Item>
-
                 </div>
             </div>
             <div style={{flex:2}}>
                 <Item>
                 </Item>
-
             </div>
-
         </Wrapper>
     )
 }

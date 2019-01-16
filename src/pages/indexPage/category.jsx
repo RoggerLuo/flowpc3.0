@@ -54,17 +54,22 @@ function Category({ list, selectedNote, selectedCategory }){
     const onClick = category => {
         if(selectedNote.id) { // 分类note到category
             Model.run('app',function*({fetch,get,change}){
-                const note = get('list').notes[selectedNoteIdx]
+                let note = get('list').notes.find(el=>el.id===selectedNote.id)
+                if(!note) {
+                    note = get('listSimilar').notes.find(el=>el.id===selectedNote.id)
+                }
+                if(!note) { message.error('遇到错误') }
                 const res = yield fetch(`classify/${note.id}/${category.id}`)
                 if(res.hasErrors) return
                 if(get('app').selectedListIdx === 0) {
-                    updateList('list')
+                    if(get('category').selectedCategory.id !== 'all') {
+                        updateList('list')
+                    }
                 }
                 Model.change('app','editingNote',{})
-                Mode.change('app','selectedNote',{})
+                Model.change('app','selectedNote',{})
                 message.success('分类成功')
                 editorOperations.new()
-
             })
         }else{ // 查看分类下的文章
             Model.change('list','query.categoryId',category.id)
@@ -83,9 +88,7 @@ function Category({ list, selectedNote, selectedCategory }){
             {categoryList.map((el,ind)=>{
                 const Tag = getTag(el.color)
                 const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
-                
-                if(selectedCategory.id === el.id && selectedNote.id) {
-                    //onClick={()=>onClick(el)}
+                if(selectedCategory.id === el.id && selectedNote.id===undefined) {
                     return (
                         <ItemWrap key={ind} style={style}>
                             <Item style={{backgroundColor:selectedColor}}>
@@ -101,7 +104,6 @@ function Category({ list, selectedNote, selectedCategory }){
                     <ItemWrap key={ind} style={style}>
                         <Item onClick={()=>onClick(el)} >
                             <Tag/>
-
                             <ItemText>
                                 <div>{el.name}</div>
                             </ItemText>

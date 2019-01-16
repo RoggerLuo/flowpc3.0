@@ -61,15 +61,11 @@ class InfiniteListExample extends React.Component {
         list.push(word)
         Model.change('listSimilar','selectedKeywords',list)
         this.cancelNoteSelect()
-        // Model.run('',function*({fetch}){
-        //     const res = yield fetch(`keyword`,{method:'post',body:{word}})
-        // })
     }
     render() {
         let weekMark = true
         let monthMark = true
         let threeMonthsMark = true
-
         const keywords = []
         this.props.notes.forEach(el=>{
             el.match_list.forEach(word=>{
@@ -92,7 +88,6 @@ class InfiniteListExample extends React.Component {
                         </KYContainer>
                         :null
                 }
-
                 <InfiniteScroll
                     initialLoad={false}
                     pageStart={0}
