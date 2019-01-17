@@ -42,7 +42,7 @@ function saveNote(noteId,content,callback){
             const new_note = {category:category_id,content,id,modify_time:moment().unix()}
             notes.unshift(new_note)
             yield change('notes',notes)
-            const editingNoteIdx = get('app').editingNoteIdx
+            // const editingNoteIdx = get('app').editingNoteIdx
             callback && callback(id)
             Model.change('app','editingNote',new_note)
         }
@@ -52,7 +52,8 @@ export default function() {
     const self = this
     const innerState = {
         oldText:'',
-        saveNoteDebouce: debounce(saveNote,1500)
+        saveNoteDebouce: debounce(saveNote,15000),
+        postQ: []
     }
     function focus() { // 点击空白区域
         if (document.activeElement.contentEditable !== 'true') {
@@ -69,14 +70,22 @@ export default function() {
                 innerState.saveNoteDebouce = debounce(saveNote,1500)
                 self.setState({ editorState: startFromScratch(), noteId:'new' }, () => {
                     self.state.inputDOM.blur()            
-                    // self.state.inputDOM.focus()
                     focus()
+                    // self.state.inputDOM.focus()
+                    // self.setState({ editorState: moveSelectionToEnd(self.state.editorState) }, () => {
+                    //     self.state.inputDOM.focus()
+                    // })
                 })                
             }
             if(isUnsaved()) {
                 const { noteId, editorState } = self.state
                 const newText = editorState.getCurrentContent().getPlainText()    
-                saveNote(noteId,'newText',setNew)
+
+                saveNote(noteId,newText,()=>{
+                    markSaved()
+                    // setNew()
+                })
+
                 console.log('fail') // 现在已知 如果没保存一定 输入错位，如果走另一个分支，就不会错位
             }else{
                 setNew()
