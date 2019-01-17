@@ -12,8 +12,19 @@ function updateNoteInList(list_namespace,newText){
         Model.change(list_namespace,`notes[${idx}].content`,newText)    
     }
 }
+const selectNull = () => {
+    Model.change('app','editingNote',{})
+}
+const markSaved = () => {
+    Model.change('editor', 'unsaved', false)
+}
+const markUnsaved = () => {
+    Model.change('editor', 'unsaved', true)
+}
+const isUnsaved = () => Model.get('editor').unsaved
+
 function saveNote(noteId,content,callback){
-    if(!Model.get('editor').unsaved) return
+    if(!isUnsaved()) return
     Model.run('list',function*({fetch,get,change}){
         if(noteId !== 'new') {
             const body = {content}
@@ -39,25 +50,42 @@ function saveNote(noteId,content,callback){
 }
 export default function() {
     const self = this
-    let oldText = ''
-    const innerTemp = {saveNoteDebouce(){}}
-    return {
-        newNote() {
-            const { noteId, editorState } = self.state
-            const newText = editorState.getCurrentContent().getPlainText()
-            if(Model.get('editor').unsaved) {
-                saveNote(noteId,newText)
-            }   
-            Model.change('app','editingNote',{})
-            self.state.inputDOM.blur()            
-            self.setState({ editorState: startFromScratch(), noteId:'new' }, () => {
+    const innerState = {
+        oldText:'',
+        saveNoteDebouce: debounce(saveNote,1500)
+    }
+    function focus() { // 点击空白区域
+        if (document.activeElement.contentEditable !== 'true') {
+            self.setState({ editorState: moveSelectionToEnd(self.state.editorState) }, () => {
                 self.state.inputDOM.focus()
             })
+        }
+    }
+    return {
+        newNote() {
+            function setNew(){
+                selectNull()
+                innerState.oldText = ''
+                innerState.saveNoteDebouce = debounce(saveNote,1500)
+                self.setState({ editorState: startFromScratch(), noteId:'new' }, () => {
+                    self.state.inputDOM.blur()            
+                    // self.state.inputDOM.focus()
+                    focus()
+                })                
+            }
+            if(isUnsaved()) {
+                const { noteId, editorState } = self.state
+                const newText = editorState.getCurrentContent().getPlainText()    
+                saveNote(noteId,'newText',setNew)
+                console.log('fail') // 现在已知 如果没保存一定 输入错位，如果走另一个分支，就不会错位
+            }else{
+                setNew()
+            }
         },
         replace(note) {
-            innerTemp.saveNoteDebouce = debounce(saveNote,1500)
+            innerState.saveNoteDebouce = debounce(saveNote,1500)
             const _editorState = startFromText(note.content)
-            oldText = _editorState.getCurrentContent().getPlainText()
+            innerState.oldText = _editorState.getCurrentContent().getPlainText()
             self.setState({ editorState:_editorState, noteId: note.id })
         },
         onChange(editorState) {
@@ -65,22 +93,22 @@ export default function() {
             const newText = editorState.getCurrentContent().getPlainText()
             if(noteId==='new' && newText==='') return // 新建而且为空就不保存
             self.setState({ editorState }, () => {
-                if (newText !== oldText) {
-                    Model.change('editor', 'unsaved', true)
-                    oldText = newText
+                if (newText !== innerState.oldText) {
+                    markUnsaved()
+                    innerState.saveNoteDebouce(noteId,newText,insertId=>{
+                        markSaved()
+                        if(insertId) { //如果是新建
+                            self.setState({noteId:insertId})
+                        }
+                    })                    
                     updateNoteInList('list',newText)
                     updateNoteInList('listSimilar',newText)
-                }
-            })
-            innerTemp.saveNoteDebouce(noteId,newText,insertId=>{
-                Model.change('editor', 'unsaved', false)
-                if(insertId) { //如果是新建
-                    self.setState({noteId:insertId})
+                    innerState.oldText = newText
                 }
             })
         },
-        focus() {
-            if (document.activeElement.contentEditable != 'true') {
+        focus() { // 点击空白区域
+            if (document.activeElement.contentEditable !== 'true') {
                 self.setState({ editorState: moveSelectionToEnd(self.state.editorState) }, () => {
                     self.state.inputDOM.focus()
                 })
@@ -90,7 +118,7 @@ export default function() {
             const { noteId, editorState } = self.state
             const content = editorState.getCurrentContent().getPlainText()
             saveNote(noteId,content,insertId=>{
-                Model.change('editor', 'unsaved', false)
+                markSaved()
                 if(insertId) { //如果是新建
                     self.setState({noteId:insertId})
                 }
