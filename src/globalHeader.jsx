@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {editorOperations} from 'components/editor'
 import {Model} from 'dvax'
-import moment from 'moment'
+import 'dvax/dateFormat'
 import { Input } from 'antd'
 const Search = Input.Search
 const Wrapper = styled.div`
@@ -90,7 +90,8 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
     }
     let modify_time = ''
     if(props.editingNote.modify_time) {
-        modify_time = moment(props.editingNote.modify_time*1000).format('YYYY年M月D日 HH:mm')
+        const date = new Date(props.editingNote.modify_time*1000)
+        modify_time = date.format('yyyy年M月d日 hh:mm')
     }
     return (
         <Wrapper>

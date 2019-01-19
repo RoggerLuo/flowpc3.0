@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Model} from 'dvax'
-import moment  from 'moment'
 const Wrapper = styled.div`
     margin-bottom:1px;
     padding:15px 10px 15px 10px;
@@ -90,12 +89,3 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
     )
 }
 export default Note
-
-
-/* 
-<SmallText style={{color:'white'}}>{moment(note.modify_time*1000).format('YYYY-MM-DD')} </SmallText>
-<SmallText>{moment(note.modify_time*1000).format('YYYY-MM-DD')} </SmallText>
-
-{secondLine}
-{secondLine}
-{secondLine} */
