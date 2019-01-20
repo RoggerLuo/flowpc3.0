@@ -45,7 +45,7 @@ const getTag = color => styled.div`
     background-color:${color};
     width:70%;
     margin-right:-70%;
-    height:70%;
+    height:80%;
 `
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
