@@ -115,7 +115,7 @@ function Category({ list, selectedNote, selectedCategory }){
                                 <ItemText style={{top:'17px',color:el.color}}>
                                     <div>{el.name}</div>
                                 </ItemText>
-                                <ItemText  style={{bottom:'10px',height:'27px',overflow:'hidden'}}>
+                                <ItemText  style={{ left: '6px',bottom:'10px',height:'27px',overflow:'hidden'}}>
                                     <div>{el.name}</div>
                                 </ItemText>
 
