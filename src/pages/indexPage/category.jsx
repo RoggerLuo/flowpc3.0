@@ -16,13 +16,20 @@ const Item = styled.div`
     font-size: 14px;
     color: #5d5d5d;
 `
+//    margin:auto;
+//    display: inline-block;
+
+
 const ItemText  = styled.div`
+    position:relative;
     max-width: 150px;
-    display: inline-block;
-    margin:auto;
     word-break: break-all;
+    color:white;
+    font-size:18px;
+    white-space: nowrap;
 `
 const Wrapper = styled.div`
+
     background-color:white;
     height:100%;
     overflow:auto;
@@ -36,9 +43,9 @@ const Wrapper = styled.div`
 `
 const getTag = color => styled.div`
     background-color:${color};
-    width:10px;
-    margin-right:-10px;
-    height:100%;
+    width:70%;
+    margin-right:-70%;
+    height:70%;
 `
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
@@ -49,7 +56,7 @@ function Category({ list, selectedNote, selectedCategory }){
         style.borderBottom = '1px solid #1990fe'
     }
     else{
-        style.borderBottom = '1px solid #ececec'
+        // style.borderBottom = '1px solid #ececec'
     }
     const onClick = category => {
         if(selectedNote.id) { // 分类note到category
@@ -104,9 +111,15 @@ function Category({ list, selectedNote, selectedCategory }){
                     <ItemWrap key={ind} style={style}>
                         <Item onClick={()=>onClick(el)} >
                             <Tag/>
-                            <ItemText>
-                                <div>{el.name}</div>
-                            </ItemText>
+                            <div >
+                                <ItemText style={{top:'17px',color:el.color}}>
+                                    <div>{el.name}</div>
+                                </ItemText>
+                                <ItemText  style={{bottom:'10px',height:'27px',overflow:'hidden'}}>
+                                    <div>{el.name}</div>
+                                </ItemText>
+
+                            </div>
                         </Item>
                     </ItemWrap>
                 )
