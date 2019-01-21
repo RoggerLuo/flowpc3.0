@@ -6,31 +6,32 @@ import {editorOperations} from 'components/editor'
 import updateList from './updateList'
 const ItemWrap = styled.div``
 const Item = styled.div`
-    height: 40px;
+background-color:#4a4a4a;
+border-bottom:2px solid #4a4a4a;
+height: 38px;
     width: 100%;
     display: flex;
     text-align: center;
-    background-color:white;
     cursor: pointer;
     color: black;
     font-size: 14px;
-    margin-bottom:1px;
 `
+    // margin-bottom:1px;
 //    margin:auto;
 //    display: inline-block;
 const ItemText  = styled.div`
-    color:black;
+    color:white;
     font-size:14px;
     position:relative;
     max-width: 150px;
     word-break: break-all;
     white-space: nowrap;
-    left: 24px;
+    left: 10px;
     line-height:40px;
     overflow:hidden;
 `
 const Wrapper = styled.div`
-    background-color:white;
+    background:#4a4a4a;
     height:100%;
     overflow:auto;
     &::-webkit-scrollbar {
@@ -43,10 +44,11 @@ const Wrapper = styled.div`
 `
 const getTag = color => styled.div`
     background-color:${color};
-    width:10%;
-    margin-right:-10%;
+    width:5%;
     height:100%;
 `
+//    margin-right:-10%;
+
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
 }
@@ -92,8 +94,9 @@ function Category({ list, selectedNote, selectedCategory }){
     const categoryList = [{name:'All',id:'all',color:'#7d7d7d'},{name:'Uncategorized',id:0,color:'#7d7d7d'},...list]
     return (
         <Wrapper >
+            <div style={{height:'44px',background:'#4a4a4a'}}></div>
             {categoryList.map((el,ind)=>{
-                const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
+                const selectedColor = el.color?hexToRgba(el.color,0.5):'#ececec'
                 const Tag = getTag(el.color) //el.color
                 if(selectedCategory.id === el.id && selectedNote.id===undefined) {
                     return (

@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 const Wrapper = styled.div`
     margin-bottom:1px;
-    padding:15px 10px 15px 10px;
+    padding:8px 10px;
     background-color:white;
 `
 const WrapperBlue = styled.div`
     margin-bottom:1px;
-    padding:15px 10px 15px 10px;
+    padding:8px 10px;
     background-color:#1890ff;
     color:white;
 `
@@ -75,7 +75,7 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
         return (
             <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
                 <Content>
-                    <Text style={{fontWeight:'500',color:'black'}}>{fisrtLine}</Text>
+                    <Text style={{fontWeight:'500',}}>{fisrtLine}</Text>
                 </Content>
             </Wrapper>
         )    

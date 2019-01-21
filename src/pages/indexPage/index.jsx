@@ -8,13 +8,14 @@ import Category from './category'
 import DeleteButton from './delete'
 const Body = styled.div`
     width:100%;
-    background-color:#e8e8e8;
+    background-color:white;
     position:absolute;
-    top:41px;
+    top:0px;
     bottom:0px;
     overflow-y:auto;
     display:flex;
 `
+//#e8e8e8;
 const EWindow = styled.div`
     position: absolute;
     min-width: 400px;
@@ -45,7 +46,7 @@ class App extends React.Component {
         }
         return (
             <Body>
-                <div style={{flex:0.8,borderRight:'1px solid #ccc'}}>
+                <div style={{flex:1.0,borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
                 
