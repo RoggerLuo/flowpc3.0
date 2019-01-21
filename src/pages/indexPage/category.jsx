@@ -6,7 +6,7 @@ import {editorOperations} from 'components/editor'
 import updateList from './updateList'
 const ItemWrap = styled.div``
 const Item = styled.div`
-    height: 60px;
+    height: 40px;
     width: 100%;
     display: flex;
     text-align: center;
@@ -14,22 +14,22 @@ const Item = styled.div`
     cursor: pointer;
     color: black;
     font-size: 14px;
-    color: #5d5d5d;
+    margin-bottom:1px;
 `
 //    margin:auto;
 //    display: inline-block;
-
-
 const ItemText  = styled.div`
+    color:black;
+    font-size:14px;
     position:relative;
     max-width: 150px;
     word-break: break-all;
-    color:white;
-    font-size:18px;
     white-space: nowrap;
+    left: 24px;
+    line-height:40px;
+    overflow:hidden;
 `
 const Wrapper = styled.div`
-
     background-color:white;
     height:100%;
     overflow:auto;
@@ -43,9 +43,9 @@ const Wrapper = styled.div`
 `
 const getTag = color => styled.div`
     background-color:${color};
-    width:70%;
-    margin-right:-70%;
-    height:80%;
+    width:10%;
+    margin-right:-10%;
+    height:100%;
 `
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
@@ -89,18 +89,18 @@ function Category({ list, selectedNote, selectedCategory }){
             }})
         }
     }
-    const categoryList = [{name:'All',id:'all'},{name:'Uncategorized',id:0},...list]
+    const categoryList = [{name:'All',id:'all',color:'#7d7d7d'},{name:'Uncategorized',id:0,color:'#7d7d7d'},...list]
     return (
         <Wrapper >
             {categoryList.map((el,ind)=>{
-                const Tag = getTag(el.color)
                 const selectedColor = el.color?hexToRgba(el.color,0.3):'#ececec'
+                const Tag = getTag(el.color) //el.color
                 if(selectedCategory.id === el.id && selectedNote.id===undefined) {
                     return (
                         <ItemWrap key={ind} style={style}>
                             <Item style={{backgroundColor:selectedColor}}>
                                 <Tag/>
-                                <ItemText>
+                                <ItemText >
                                     <div>{el.name}</div>
                                 </ItemText>
                             </Item>
@@ -111,15 +111,9 @@ function Category({ list, selectedNote, selectedCategory }){
                     <ItemWrap key={ind} style={style}>
                         <Item onClick={()=>onClick(el)} >
                             <Tag/>
-                            <div >
-                                <ItemText style={{top:'17px',color:el.color}}>
-                                    <div>{el.name}</div>
-                                </ItemText>
-                                <ItemText  style={{ left: '6px',bottom:'10px',height:'27px',overflow:'hidden'}}>
-                                    <div>{el.name}</div>
-                                </ItemText>
-
-                            </div>
+                            <ItemText >
+                                <div>{el.name}</div>
+                            </ItemText>
                         </Item>
                     </ItemWrap>
                 )
