@@ -4,34 +4,30 @@ import {Model} from 'dvax'
 import {message} from 'antd'
 import {editorOperations} from 'components/editor'
 import updateList from './updateList'
+const categoryBackgroundColor = `transparent` //#4a4a4a
 const ItemWrap = styled.div``
-const Item = styled.div`
-background-color:#4a4a4a;
-border-bottom:2px solid #4a4a4a;
-height: 38px;
-    width: 100%;
-    display: flex;
-    text-align: center;
-    cursor: pointer;
-    color: black;
-    font-size: 14px;
-`
     // margin-bottom:1px;
 //    margin:auto;
 //    display: inline-block;
 const ItemText  = styled.div`
+    left: 5px;
     color:white;
     font-size:14px;
+    font-weight:300;
     position:relative;
     max-width: 150px;
     word-break: break-all;
     white-space: nowrap;
-    left: 10px;
-    line-height:40px;
+    line-height:35px;
     overflow:hidden;
 `
+//background:${categoryBackgroundColor};
+//    padding: 0px 10px;
+
 const Wrapper = styled.div`
-    background:#4a4a4a;
+
+    background: -webkit-linear-gradient(45deg,#505050,black);
+
     height:100%;
     overflow:auto;
     &::-webkit-scrollbar {
@@ -44,8 +40,9 @@ const Wrapper = styled.div`
 `
 const getTag = color => styled.div`
     background-color:${color};
-    width:5%;
-    height:100%;
+    width:7px;
+    height: 7px;
+    margin: auto 0;
 `
 //    margin-right:-10%;
 
@@ -94,15 +91,32 @@ function Category({ list, selectedNote, selectedCategory }){
     const categoryList = [{name:'All',id:'all',color:'#7d7d7d'},{name:'Uncategorized',id:0,color:'#7d7d7d'},...list]
     return (
         <Wrapper >
-            <div style={{height:'44px',background:'#4a4a4a'}}></div>
+            <div style={{height:'44px',background:categoryBackgroundColor}}></div>
             {categoryList.map((el,ind)=>{
                 const selectedColor = el.color?hexToRgba(el.color,0.5):'#ececec'
                 const Tag = getTag(el.color) //el.color
+                //background-color:
+                //border-bottom:2px solid ${categoryBackgroundColor};
+                const Item = styled.div`
+                    padding:0 10px;
+                    height: 35px;
+                    background-color:${categoryBackgroundColor};
+                    margin-bottom:2px;
+                    width: 100%;
+                    display: flex;
+                    text-align: center;
+                    cursor: pointer;
+                    color: black;
+                    font-size: 14px;
+                    &:hover{
+                        background-color:${selectedColor};
+                    }
+                `
                 if(selectedCategory.id === el.id && selectedNote.id===undefined) {
                     return (
                         <ItemWrap key={ind} style={style}>
                             <Item style={{backgroundColor:selectedColor}}>
-                                <Tag/>
+                                {/* <Tag/> */}
                                 <ItemText >
                                     <div>{el.name}</div>
                                 </ItemText>
@@ -113,7 +127,7 @@ function Category({ list, selectedNote, selectedCategory }){
                 return (
                     <ItemWrap key={ind} style={style}>
                         <Item onClick={()=>onClick(el)} >
-                            <Tag/>
+                            {/* <Tag/> */}
                             <ItemText >
                                 <div>{el.name}</div>
                             </ItemText>

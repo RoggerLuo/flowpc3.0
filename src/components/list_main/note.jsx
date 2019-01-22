@@ -5,6 +5,9 @@ const Wrapper = styled.div`
     margin-bottom:1px;
     padding:8px 10px;
     background-color:white;
+    &:hover {
+        background-color:#f7f7f7;
+    }
 `
 const WrapperBlue = styled.div`
     margin-bottom:1px;
@@ -56,9 +59,9 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
         Model.change('app','selectedListIdx',0)
         Model.change('app','selectedNote',note)
     }
-    const wrapperStyle = {}
-    if(isEditing) {
-        wrapperStyle.backgroundColor = '#f7f7f7'
+    const backColorSelected = {}
+    if(isEditing) { // 选中的背景
+        backColorSelected.backgroundColor = '#f7f7f7'
     }
     const [fisrtLine,rest] = getFirstLine(note.content)
     const [secondLine,_]= getFirstLine(rest)
@@ -73,7 +76,7 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
     }
     if(note.category === selectedCategory.id && selectedCategory.id!==0) {
         return (
-            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
+            <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={backColorSelected}>
                 <Content>
                     <Text style={{fontWeight:'500',}}>{fisrtLine}</Text>
                 </Content>
@@ -81,7 +84,7 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
         )    
     }
     return (
-        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={wrapperStyle}>
+        <Wrapper onClick={select} onDoubleClick={onDoubleClick} style={backColorSelected}>
             <Content>
                 <Text>{fisrtLine}</Text>
             </Content>

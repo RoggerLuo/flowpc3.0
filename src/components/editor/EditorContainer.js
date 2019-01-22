@@ -24,7 +24,7 @@ function Container({ children, focus, unsaved }) {
     }
     return (
         <OuterMost style={style} onClick={focus}>
-            <div style={{ padding: '10px' }}>
+            <div style={{ padding: '40px 10px 10px 20px' }}>
                 {children}
             </div>
         </OuterMost>

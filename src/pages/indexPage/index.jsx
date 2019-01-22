@@ -46,7 +46,7 @@ class App extends React.Component {
         }
         return (
             <Body>
-                <div style={{flex:1.0,borderRight:'1px solid #ccc'}}>
+                <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
                 
