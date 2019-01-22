@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
 import DeleteButton from './delete'
+import { Input } from 'antd'
+const Search = Input.Search
+
 const Body = styled.div`
     width:100%;
     background-color:white;
@@ -15,13 +18,26 @@ const Body = styled.div`
     overflow-y:auto;
     display:flex;
 `
-//#e8e8e8;
-const EWindow = styled.div`
-    position: absolute;
-    min-width: 400px;
-    min-height: 100px;
-    background: white;
+const Wrap = styled.div`
+    height:44px;
+    padding-top:10px;
+    padding-left: 6%;
 `
+function SearchArea(){
+    return (
+        <Wrap>
+            <Search
+                size={'small'}
+                placeholder="搜索"
+                onSearch={value => {
+                    Model.dispatch({type:'search/search',content:value})
+                    Model.change('search','visible',true)
+                }}
+                style={{ width: "93%" }}
+            />
+        </Wrap>
+    )
+}
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -49,14 +65,13 @@ class App extends React.Component {
                 <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
-                
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
+                    <SearchArea/>
                     <List onSelect={this.onSelect}/>
                 </div>
                 <div style={{flex:3}}>
                     <Editor deliver={Deliver(this.interfaces)}/>
                 </div>
-
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>
                     <ListSimilar onSelect={this.onSelect}/>
                 </div>

@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import {editorOperations} from 'components/editor'
 import {Model} from 'dvax'
 import 'dvax/dateFormat'
-import { Input } from 'antd'
-const Search = Input.Search
 const Wrapper = styled.div`
     width:100%;
     height:41px;
@@ -105,14 +103,6 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
                     <div onClick={()=>handleClick({key:'index'})} style={{padding:'0px 13px',cursor:'pointer'}}>返回</div>
                 }
                 <Item>
-                    <Search
-                        placeholder="input search text"
-                        onSearch={value => {
-                            Model.dispatch({type:'search/search',content:value})
-                            Model.change('search','visible',true)
-                        }}
-                        style={{ width: 200 }}
-                    />
                     {null
                         // current==='index'?
                         // <div>{selectedCategory.name||'Uncategorized'}</div>:
