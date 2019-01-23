@@ -19,7 +19,7 @@ const Body = styled.div`
     display:flex;
 `
 const Wrap = styled.div`
-    height:44px;
+    height:48px;
     padding-top:10px;
     padding-left: 6%;
 `

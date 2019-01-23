@@ -23,12 +23,15 @@ const LoadingContainer = styled.div`
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 const InserLine = styled.div`
+    padding-right: 8px;    
+    text-align:center;
     user-select:none;
     padding:0px 5px;
-    line-height:28px;
-    color: #b7b6b6;
-    border-bottom:1px solid #ececec;
-    background-color:white;
+    line-height: 17px;
+    font-size: 13px;
+    color: #989898;
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
 `
 class InfiniteListExample extends React.Component {
     state = {}

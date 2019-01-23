@@ -24,6 +24,7 @@ function saveNote(noteId,content,callback){
             const res = yield fetch(`note/${noteId}`,{method:'post',body})
             callback && callback()
         }else{ // new
+            if(content==='') return // 新建而且为空就不保存
             let category_id = Model.get('category').selectedCategory.id
             if(category_id === 'all') {
                 category_id = 0
@@ -77,7 +78,6 @@ export default function() {
         onChange(editorState) {
             const { noteId } = self.state
             const newText = editorState.getCurrentContent().getPlainText()
-            if(noteId==='new' && newText==='') return // 新建而且为空就不保存
             self.setState({ editorState }, () => {
                 if (newText !== innerState.oldText) {
                     markUnsaved()

@@ -23,22 +23,26 @@ const LoadingContainer = styled.div`
 import { message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 const InserLine = styled.div`
+    padding-right: 8px;    
+    text-align:center;
     user-select:none;
     padding:0px 5px;
-    line-height:28px;
-    color: #b7b6b6;
-    border-bottom:1px solid #ececec;
-    background-color:white;
+    line-height: 17px;
+    font-size: 13px;
+    color: #989898;
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
 `
 const KYContainer = styled.div`
     background-color:white;
-    padding:12px;
-    border-bottom:1px solid #ececec;
+    padding:7px;
 `
+//    border-bottom:1px solid #ececec;
+
 const Tag = styled.span`
     padding:0px 5px;
     display:inline-block;
-    font-size: 16px;
+    font-size: 15px;
     color:black;
     user-select:none;
     cursor:pointer;
