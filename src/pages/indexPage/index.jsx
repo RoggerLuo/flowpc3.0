@@ -65,7 +65,7 @@ class App extends React.Component {
                 <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
-                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
+                <div style={{flex:2,borderRight:'1px solid #ccc',display:'flex',flexDirection:'column'}}>
                     <SearchArea/>
                     <List onSelect={this.onSelect}/>
                 </div>

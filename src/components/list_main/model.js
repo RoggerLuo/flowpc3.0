@@ -8,7 +8,7 @@ export default {
         hasMore:true,
         query:{
             pageNum: 1,
-            pageSize: 15,
+            pageSize: 20,
             categoryId:'all'
         }
     },

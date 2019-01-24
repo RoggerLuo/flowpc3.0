@@ -1,12 +1,8 @@
 import React from 'react'
-import { connect } from 'dvax'
+import { Model } from 'dvax'
 import img from './bg.png'
 import styled from 'styled-components'
-import xinjian from './images/xinzeng.png'
-import xinjian2 from './images/xinzeng-2.png'
-import baocun from './images/baocun.png'
-import baocun2 from './images/baocun-2.png'
-
+import icon from 'assets/icon/iconfont.css'
 const OuterMost = styled.div`
     font-size:17px;
     cursor:text;
@@ -24,6 +20,13 @@ const OuterMost = styled.div`
     padding-top:8px;
     padding-left:12px;
 `
+const IconWrap = styled.div`
+    width: 37%;
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 12px;
+`
 function Container({ children, focus, unsaved }) {
     let style = {}
     if(unsaved){
@@ -34,17 +37,11 @@ function Container({ children, focus, unsaved }) {
             <div style={{ padding: '5px 10px 10px 10px' }}>
                 {children}
             </div>
-            <div style={{position:'absolute',bottom:0}}>
-                <img src={xinjian} height="37" width="37" style={{marginRight:'20px'}} onMouseEnter={()=>{}}/>
-                <img src={baocun} height="40"/>
-            </div>
-
+            <IconWrap >
+                <i className={icon.iconCreate+' '+icon.iconfont} style={{fontSize:'43px'}}></i>
+                <i className={icon.iconSave+' '+icon.iconfont} style={{fontSize:'45px'}}></i>
+            </IconWrap>
         </OuterMost>
     )
 }
-function mapStateToProps(state) {
-    return { 
-        unsaved: state.editor.unsaved
-    }
-}
-export default connect(mapStateToProps)(Container)
+export default Model.connect('editor')(Container)

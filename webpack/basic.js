@@ -16,6 +16,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css', '.html'],
         alias: {
             'components': `${projectRoot}/src/components`,
+            'assets': `${projectRoot}/src/assets`,
             'utils': `${projectRoot}/src/utils`
         }
     },

@@ -1,9 +1,10 @@
 import React from 'react'
 import './global.css'
-import { Model } from 'dvax'
+// import { Model } from 'dvax'
 import IndexPage from './pages/indexPage'
 import CategoryPage from './pages/categoryPage'
-import Header from './globalHeader'
+// import Header from './globalHeader'
+import 'assets/icon/iconfont.css'
 class App extends React.Component {
     state = {current: 'index'}
     handleClick = e => this.setState({current: e.key})
