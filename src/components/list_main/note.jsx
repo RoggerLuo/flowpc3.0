@@ -26,6 +26,8 @@ const Content = styled.div`
 `
 const Text = styled.div`
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
 `
 const SmallText = styled.div`
     color: #888888;

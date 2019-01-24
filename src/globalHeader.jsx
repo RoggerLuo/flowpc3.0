@@ -86,11 +86,6 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
         editorOperations.new()
         handleClick({key:'category'})
     }
-    let modify_time = ''
-    if(props.editingNote.modify_time) {
-        const date = new Date(props.editingNote.modify_time*1000)
-        modify_time = date.format('yyyy年M月d日 hh:mm')
-    }
     return (
         <Wrapper>
             <SearchPanel/>
@@ -127,7 +122,6 @@ function Header ({handleClick,current,selectedCategory,unsaved,...props}) {
                         }
                     </Item>
                     <Item style={{color:'#ccc'}}>
-                        {modify_time}
                     </Item>
                 </div>
             </div>

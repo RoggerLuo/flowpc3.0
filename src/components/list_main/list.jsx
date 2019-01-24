@@ -7,10 +7,10 @@ const Container = styled.div`
     height: 100%;
     &::-webkit-scrollbar {
         width: 0px;
-        background: #f5f5f5;
+        background: white;
     }
     &::-webkit-scrollbar-thumb {
-        background: #d6d6d6;
+        background: #585858;
     }
 `
 const LoadingContainer = styled.div`
@@ -27,12 +27,15 @@ const InserLine = styled.div`
     text-align:center;
     user-select:none;
     padding:0px 5px;
-    line-height: 17px;
-    font-size: 13px;
+    line-height: 35px;
+    font-size: 12px;
     color: #989898;
+`
+//    background:#f7f7f7;
+/* 
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
-`
+ */
 class InfiniteListExample extends React.Component {
     state = {}
     render() {

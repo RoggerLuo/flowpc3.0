@@ -4,8 +4,11 @@ import { Model } from 'dvax'
 import {message} from 'antd'
 const Wrapper = styled.div`
     margin-bottom:1px;
-    padding:15px 10px 15px 10px;
+    padding:8px 10px;
     background-color:white;
+    &:hover {
+        background-color:#f7f7f7;
+    }
 `
 const WrapperBlue = styled.div`
     margin-bottom:1px;

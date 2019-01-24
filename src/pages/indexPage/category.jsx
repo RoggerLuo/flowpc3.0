@@ -35,7 +35,7 @@ const Wrapper = styled.div`
         background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
-        background: #d6d6d6;
+        background: black;
     }
 `
 const getTag = color => styled.div`
@@ -91,7 +91,7 @@ function Category({ list, selectedNote, selectedCategory }){
     const categoryList = [{name:'All',id:'all',color:'#7d7d7d'},{name:'Uncategorized',id:0,color:'#7d7d7d'},...list]
     return (
         <Wrapper >
-            <div style={{height:'44px',background:categoryBackgroundColor}}></div>
+            <div style={{height:'45px',background:categoryBackgroundColor}}></div>
             {categoryList.map((el,ind)=>{
                 const selectedColor = el.color?hexToRgba(el.color,0.5):'#ececec'
                 const Tag = getTag(el.color) //el.color

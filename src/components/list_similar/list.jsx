@@ -3,15 +3,9 @@ import { Model } from 'dvax'
 import Note from './note'
 import styled from 'styled-components'
 const Container = styled.div`
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    &::-webkit-scrollbar {
-        width: 0px;
-        background: #f5f5f5;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #d6d6d6;
-    }
 `
 const LoadingContainer = styled.div`
     position: absolute;
@@ -21,24 +15,30 @@ const LoadingContainer = styled.div`
     right:50%;
 `
 import { message, Spin } from 'antd'
-import InfiniteScroll from 'react-infinite-scroller'
+const Scroll = styled.div`
+    &::-webkit-scrollbar {
+        width: 1px;
+        background: white;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: black;
+    }
+    overflow:auto;
+`
 const InserLine = styled.div`
     padding-right: 8px;    
     text-align:center;
     user-select:none;
     padding:0px 5px;
-    line-height: 17px;
-    font-size: 13px;
+    line-height: 35px;
+    font-size: 12px;
     color: #989898;
-    border-top: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
 `
 const KYContainer = styled.div`
     background-color:white;
     padding:7px;
 `
 //    border-bottom:1px solid #ececec;
-
 const Tag = styled.span`
     padding:0px 5px;
     display:inline-block;
@@ -46,6 +46,7 @@ const Tag = styled.span`
     color:black;
     user-select:none;
     cursor:pointer;
+    font-weight:500;
 `
 class InfiniteListExample extends React.Component {
     state = {}
@@ -92,13 +93,7 @@ class InfiniteListExample extends React.Component {
                         </KYContainer>
                         :null
                 }
-                <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={()=>Model.dispatch({type:'list/loadMore'})}
-                    hasMore={!this.props.loading && this.props.hasMore}
-                    useWindow={false}
-                >
+                <Scroll>
                     {this.props.notes
                         .filter(note=>{
                             return this.props.selectedKeywords.every(word=>{ //every
@@ -150,7 +145,7 @@ class InfiniteListExample extends React.Component {
                                 </div>
                             )
                     })}
-                </InfiniteScroll>
+                </Scroll>
                 {this.props.loading && this.props.hasMore && (<LoadingContainer><Spin/></LoadingContainer>)}
             </Container>
         )
