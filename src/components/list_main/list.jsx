@@ -31,11 +31,6 @@ const InserLine = styled.div`
     font-size: 12px;
     color: #989898;
 `
-//    background:#f7f7f7;
-/* 
-    border-top: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
- */
 class InfiniteListExample extends React.Component {
     state = {}
     render() {
