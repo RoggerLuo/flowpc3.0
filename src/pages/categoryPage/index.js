@@ -8,7 +8,7 @@ const Body = styled.div`
     width:100%;
     background-color:#f5f5f5;
     position:absolute;
-    top:41px;
+    top:0px;
     bottom:0px;
     overflow-y:auto;
 `
@@ -34,10 +34,12 @@ Model.create({
         }
     }
 })
-function AppAdmin({ list }) {
+function AppAdmin({ list,...props }) {
     return (
         <Body>
-            <div style={{height:'15px',width:'1px'}}></div>
+            <div style={{height:'45px',width:'45px'}} onClick={()=>props.handleClick({key:''})}>
+                back
+            </div>
             <Row>
                 <AddNew />
             </Row>

@@ -4,6 +4,7 @@ export default {
     namespace: 'list',
     state: {
         notes: [],
+        _originalNotes:[],
         loading:false,
         hasMore:true,
         query:{
@@ -55,6 +56,16 @@ export default {
         }
     },
     effects: {
+        
+        * replaceNotesBack({ fetch, change, get }){
+            yield change('notes',[])
+            yield change('notes',get()._originalNotes)
+        },
+
+        * replaceNotes({ fetch, change, get },{notes}){
+            yield change('notes',[])
+            yield change('notes',notes)
+        },
         * getData({ fetch, change, get },{callback}){
             const query = {...get().query}
             // query.pageNum = 1
@@ -65,6 +76,7 @@ export default {
             const notes = res.data || []
             yield change('notes',[])
             yield change('notes',notes)
+            yield change('_originalNotes',notes)
             yield change('loading',false)
             if(notes.length < query.pageSize && query.pageNum!=1) {
                 yield change('hasMore',false)
@@ -85,7 +97,10 @@ export default {
             console.log('load more...')
             if(res.hasErrors) return
             const notes = res.data
-            yield change('notes',[...get().notes,...notes])
+            const newNotes = [...get().notes,...notes]
+            yield change('notes',newNotes)
+            yield change('_originalNotes',newNotes)
+
             yield change('loading',false)
             if(notes.length < query.pageSize) {
                 yield change('hasMore',false)

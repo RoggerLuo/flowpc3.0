@@ -8,6 +8,7 @@ const OuterMost = styled.div`
     font-size:17px;
     cursor:text;
     height:100%;
+    min-width:460px;
     background-color:white;
     overflow-y:scroll;
     &::-webkit-scrollbar {
@@ -28,6 +29,19 @@ const IconWrap = styled.div`
     position: absolute;
     bottom: 12px;
 `
+const LabelWrap = styled.div`
+    width: 36%;
+    min-width:450px;
+    height: 20%;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 12px;
+    padding: 10px 0px;
+    overflow:auto;
+    background-color:gold;
+`
+//
+
 function goback(){
     const hisN =[...Model.get('app').historyNote]
     if(hisN.length>1) {
@@ -38,7 +52,7 @@ function goback(){
         Model.change('app','historyNote',hisN)            
     }
 }
-function Container({ children, focus, unsaved, editingNote}) {
+function Container({ list,children, focus, unsaved, editingNote}) {
     let style = {}
     if(unsaved){
         style = { ...style, backgroundImage: `url(${img})` }            
@@ -53,14 +67,25 @@ function Container({ children, focus, unsaved, editingNote}) {
             <div style={{ padding: '15px 10px 10px 10px' }}>
                 {children}
             </div>
-            <IconWrap >
-                <i className={icon.iconCreate+' '+icon.iconfont} style={{fontSize:'43px'}}></i>
-                <i className={icon.iconSave+' '+icon.iconfont} style={{fontSize:'45px'}}></i>
-            </IconWrap>
+            <LabelWrap>
+                {list.map((el,ind)=>{
+                    return (
+                        <div key={ind} style={{margin:'3px 16px 3px 6px',whiteSpace: 'nowrap',display:'inline-block',cursor:'pointer'}}>
+                            {el.name}
+                        </div>
+                    )
+                })}
+            </LabelWrap>
             <div style={{position:'absolute',bottom:0}}>
                 {modify_time}
             </div>
         </OuterMost>
     )
 }
-export default Model.connect(['app','editor'])(Container)
+export default Model.connect(['app','category','editor'])(Container)
+/* 
+    <IconWrap >
+        <i className={icon.iconCreate+' '+icon.iconfont} style={{fontSize:'43px'}}></i>
+        <i className={icon.iconSave+' '+icon.iconfont} style={{fontSize:'45px'}}></i>
+    </IconWrap>
+ */

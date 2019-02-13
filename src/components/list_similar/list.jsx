@@ -36,13 +36,13 @@ const InserLine = styled.div`
 `
 const KYContainer = styled.div`
     background-color:white;
-    padding:7px;
+    padding:10px;
 `
 //    border-bottom:1px solid #ececec;
 const Tag = styled.span`
-    padding:0px 5px;
+    padding:4px 5px;
     display:inline-block;
-    font-size: 15px;
+    font-size: 16px;
     color:black;
     user-select:none;
     cursor:pointer;

@@ -13,9 +13,9 @@ class App extends React.Component {
             <div style={{height:'100%',justifyContent: 'space-between',display:'flex'}}>
                 {(()=>{
                     if(this.state.current==='category') {
-                        return <CategoryPage/>
+                        return <CategoryPage handleClick={this.handleClick}/>
                     }
-                    return <IndexPage/>
+                    return <IndexPage handleClick={this.handleClick}/>
                 })()}
             </div>
         )

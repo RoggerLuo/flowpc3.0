@@ -6,8 +6,9 @@ import styled from 'styled-components'
 import {Model} from 'dvax'
 import Category from './category'
 import DeleteButton from './delete'
-import { Input } from 'antd'
-const Search = Input.Search
+import SearchArea from './SearchArea'
+// import SearchPanel from './SearchPanel'
+//<SearchPanel/>
 
 const Body = styled.div`
     width:100%;
@@ -18,31 +19,10 @@ const Body = styled.div`
     overflow-y:auto;
     display:flex;
 `
-const Wrap = styled.div`
-    height:48px;
-    padding-top:10px;
-    padding-left: 6%;
-`
-function SearchArea(){
-    return (
-        <Wrap>
-            <Search
-                size={'small'}
-                placeholder="搜索"
-                onSearch={value => {
-                    Model.dispatch({type:'search/search',content:value})
-                    Model.change('search','visible',true)
-                }}
-                style={{ width: "93%" }}
-            />
-        </Wrap>
-    )
-}
-global.interfaces = {}
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.interfaces = global.interfaces//{}
+        this.interfaces = {}
         this.onSelect = selectedNote => {
             const hisN =[...Model.get('app').historyNote]
             hisN.push(selectedNote)
@@ -81,7 +61,6 @@ class App extends React.Component {
                 Model.change('app','historyNote',hisN)            
             }
         }
-        
         return (
             <Body>
                 <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
@@ -95,10 +74,9 @@ class App extends React.Component {
                     <div onClick={goback} style={{backgroundColor:'white',cursor:'pointer',position:'absolute',top:0}}>
                         {"<goBack"}
                     </div>
-
                     <Editor deliver={Deliver(this.interfaces)}/>
                 </div>
-                <div style={{flex:2,borderRight:'1px solid #ccc'}}>
+                <div style={{flex:2.1,borderRight:'1px solid #ccc'}}>
                     <ListSimilar onSelect={this.onSelect}/>
                 </div>
                 <DeleteButton {...this.props}/>

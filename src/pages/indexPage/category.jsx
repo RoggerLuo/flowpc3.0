@@ -6,9 +6,6 @@ import {editorOperations} from 'components/editor'
 import updateList from './updateList'
 const categoryBackgroundColor = `transparent` //#4a4a4a
 const ItemWrap = styled.div``
-    // margin-bottom:1px;
-//    margin:auto;
-//    display: inline-block;
 const ItemText  = styled.div`
     left: 5px;
     color:white;
@@ -21,13 +18,8 @@ const ItemText  = styled.div`
     line-height:35px;
     overflow:hidden;
 `
-//background:${categoryBackgroundColor};
-//    padding: 0px 10px;
-
 const Wrapper = styled.div`
-
     background: -webkit-linear-gradient(45deg,#505050,black);
-
     height:100%;
     overflow:auto;
     &::-webkit-scrollbar {
@@ -44,12 +36,10 @@ const getTag = color => styled.div`
     height: 7px;
     margin: auto 0;
 `
-//    margin-right:-10%;
-
 function hexToRgba(hex, opacity) { 
     return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")"
 }
-function Category({ list, selectedNote, selectedCategory }){
+function Category({ list, selectedNote, selectedCategory, ...props }){
     const style = {} //padding:'5px 5px',
     if(selectedNote.id) {
         style.borderBottom = '1px solid #1990fe'
@@ -91,7 +81,9 @@ function Category({ list, selectedNote, selectedCategory }){
     const categoryList = [{name:'All',id:'all',color:'#7d7d7d'},{name:'Uncategorized',id:0,color:'#7d7d7d'},...list]
     return (
         <Wrapper >
-            <div style={{height:'45px',background:categoryBackgroundColor}}></div>
+            <div style={{color:'white',height:'45px',background:categoryBackgroundColor}} onClick={()=>props.handleClick({key:'category'})}>
+                设置
+            </div>
             {categoryList.map((el,ind)=>{
                 const selectedColor = el.color?hexToRgba(el.color,0.5):'#ececec'
                 const Tag = getTag(el.color) //el.color
