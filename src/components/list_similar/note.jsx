@@ -48,6 +48,9 @@ function Note({ onSelect, editingNote, selectedNote, note,editingListIdx,selecte
         Model.change('app','editingNote',note)
         Model.change('app','selectedNote',{})
         onSelect(note)
+        // onSelect(note)
+        Model.dispatch({type:'listSimilar/getData',noteId:note.id,callback(){}})
+        Model.change('listSimilar','selectedKeywords',[]) 
     }
     function onDoubleClick(){
         Model.change('app','selectedListIdx',1)

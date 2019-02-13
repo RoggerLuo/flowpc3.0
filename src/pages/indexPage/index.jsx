@@ -38,11 +38,18 @@ function SearchArea(){
         </Wrap>
     )
 }
+global.interfaces = {}
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.interfaces = {}
-        this.onSelect = selectedNote => this.interfaces.replace(selectedNote)
+        this.interfaces = global.interfaces//{}
+        this.onSelect = selectedNote => {
+            const hisN =[...Model.get('app').historyNote]
+            hisN.push(selectedNote)
+            Model.change('app','historyNote',hisN)
+
+            this.interfaces.replace(selectedNote)
+        }
     }
     componentDidMount(){
         Model.run('category',function*({fetch,change}){
@@ -60,6 +67,21 @@ class App extends React.Component {
                 })
             }
         }
+        function goback(){
+            const hisN =[...Model.get('app').historyNote]
+            if(hisN.length>1) {
+                hisN.pop()
+                const note = hisN.pop()
+                global.interfaces.replace(note)
+                // 这是找相似笔记的全局组件
+                Model.dispatch({type:'listSimilar/getData',noteId:note.id,callback(){}})
+                Model.change('listSimilar','selectedKeywords',[]) 
+        
+                hisN.push(note)
+                Model.change('app','historyNote',hisN)            
+            }
+        }
+        
         return (
             <Body>
                 <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
@@ -70,6 +92,10 @@ class App extends React.Component {
                     <List onSelect={this.onSelect}/>
                 </div>
                 <div style={{flex:3}}>
+                    <div onClick={goback} style={{backgroundColor:'white',cursor:'pointer',position:'absolute',top:0}}>
+                        {"<goBack"}
+                    </div>
+
                     <Editor deliver={Deliver(this.interfaces)}/>
                 </div>
                 <div style={{flex:2,borderRight:'1px solid #ccc'}}>

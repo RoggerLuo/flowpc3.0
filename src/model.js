@@ -11,7 +11,7 @@ export default {
         selectedListIdx:0,
         selectedNote:{},
 
-        
+        historyNote:[],
         showSearchPanel: false,
         content: '',
     },

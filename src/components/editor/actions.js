@@ -38,6 +38,15 @@ function saveNote(noteId,content,callback){
             yield change('notes',notes)
             callback && callback(id)
             Model.change('app','editingNote',new_note)
+            
+            // push进history
+            const hisN =[...Model.get('app').historyNote]
+            hisN.push(new_note)
+            Model.change('app','historyNote',hisN)
+            // 这是找相似笔记的全局组件
+            Model.dispatch({type:'listSimilar/getData',noteId:new_note.id,callback(){}})
+            Model.change('listSimilar','selectedKeywords',[]) 
+            
         }
     })
 }

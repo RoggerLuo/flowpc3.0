@@ -28,6 +28,16 @@ const IconWrap = styled.div`
     position: absolute;
     bottom: 12px;
 `
+function goback(){
+    const hisN =[...Model.get('app').historyNote]
+    if(hisN.length>1) {
+        hisN.pop()
+        const note = hisN.pop()
+        global.interfaces.replace(note)
+        hisN.push(note)
+        Model.change('app','historyNote',hisN)            
+    }
+}
 function Container({ children, focus, unsaved, editingNote}) {
     let style = {}
     if(unsaved){
@@ -38,19 +48,17 @@ function Container({ children, focus, unsaved, editingNote}) {
         const date = new Date(editingNote.modify_time*1000)
         modify_time = date.format('yyyy年M月d日 hh:mm')
     }
-
     return (
         <OuterMost style={style} onClick={focus}>
-            <div style={{ padding: '5px 10px 10px 10px' }}>
+            <div style={{ padding: '15px 10px 10px 10px' }}>
                 {children}
             </div>
             <IconWrap >
                 <i className={icon.iconCreate+' '+icon.iconfont} style={{fontSize:'43px'}}></i>
                 <i className={icon.iconSave+' '+icon.iconfont} style={{fontSize:'45px'}}></i>
             </IconWrap>
-            <div>
-            {modify_time}
-
+            <div style={{position:'absolute',bottom:0}}>
+                {modify_time}
             </div>
         </OuterMost>
     )
