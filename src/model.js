@@ -14,8 +14,16 @@ export default {
         historyNote:[],
         showSearchPanel: false,
         content: '',
+        authStatus: true
     },
     reducers: {
     },
-    effects: {}
+    effects: {
+        * verify({fetch,change}){
+            const res = yield fetch(`auth/verify`)
+            if(res.errorCode === 401)  yield change('authStatus',false)
+            if(res.status === 'ok')  yield change('authStatus',true)
+
+        }
+    }
 }

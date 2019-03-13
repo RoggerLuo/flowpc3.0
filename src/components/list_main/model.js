@@ -9,7 +9,7 @@ export default {
         hasMore:true,
         query:{
             // pageNum: 1,
-            start:0,
+            startIndex:0,
             pageSize: 20,
             categoryId:'all'
         }
@@ -69,9 +69,9 @@ export default {
         * getData({ fetch, change, get },{callback}){
             const query = {...get().query}
             // query.pageNum = 1
-            yield change('query.start',0)    
+            yield change('query.startIndex',0)    
             yield change('loading',true)
-            const res = yield fetch(`notes`,{query})
+            const res = yield fetch(`note`,{query})
             if(res.hasErrors) return
             const notes = res.data || []
             yield change('notes',[])
@@ -85,12 +85,12 @@ export default {
         },
         * loadMore({change,fetch,get}){
             const query = {}
-            query.start = get().query.start
-            const start = get().notes.length
-            if(get().query.start > start) {
-                query.start = start
+            query.startIndex = get().query.startIndex
+            const startIndex = get().notes.length
+            if(get().query.startIndex > startIndex) {
+                query.startIndex = startIndex
             }
-            yield change('query.start',query.start + get().query.pageSize) 
+            yield change('query.startIndex',query.startIndex + get().query.pageSize) 
             query.pageSize = get().query.pageSize
             yield change('loading',true)
             const res = yield fetch(`notes`,{query})

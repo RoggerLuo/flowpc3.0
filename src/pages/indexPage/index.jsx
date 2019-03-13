@@ -7,6 +7,7 @@ import {Model} from 'dvax'
 import Category from './category'
 import DeleteButton from './delete'
 import SearchArea from './SearchArea'
+import LoginModal from './loginModal'
 // import SearchPanel from './SearchPanel'
 //<SearchPanel/>
 
@@ -32,6 +33,8 @@ class App extends React.Component {
         }
     }
     componentDidMount(){
+        Model.dispatch({type:'app/verify'})
+
         Model.run('category',function*({fetch,change}){
             const res = yield fetch(`categories`)
             yield change('list',res.data)
@@ -63,6 +66,7 @@ class App extends React.Component {
         }
         return (
             <Body>
+                <LoginModal/>
                 <div style={{width: '160px',borderRight:'1px solid #ccc'}}>
                     <Category {...this.props}/>
                 </div>
