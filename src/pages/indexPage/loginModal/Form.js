@@ -6,16 +6,16 @@ import TreeComp from './TreeComp'
 const { TextArea } = Input;
 const FormItem = Form.Item
 
-const FormComp = ({ form, submit,...props }) => {
+const FormComp = ({ form, onSubmit,...props }) => {
     const { getFieldDecorator, validateFields, setFieldsValue, resetFields } = form
-    const onSubmit = () => {
-        validateFields((error,value)=>{ // 规则检查
-            if(error===null) {
-                value = {...value}
-                submit(value)    
-            }
-        })
-    }
+    // const onSubmit = (submit) => {
+    //     validateFields((error,value)=>{ // 规则检查
+    //         if(error===null) {
+    //             value = {...value}
+    //             submit(value)
+    //         }
+    //     })
+    // }
     return(
         <Form>
             <FormItem label={'账号'} wrapperCol={{span:20}} labelCol={{ span: 3 }}>

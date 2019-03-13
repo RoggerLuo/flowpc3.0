@@ -3,7 +3,7 @@ import { Model } from 'dvax'
 // import moment  from "moment"
 import './model'
 Model.create({
-    namespace:'add2CategoryModal',
+    namespace:'login',
     state:{
         treeData:[],
         employees:[],        
