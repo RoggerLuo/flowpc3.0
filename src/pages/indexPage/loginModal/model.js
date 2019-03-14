@@ -5,16 +5,8 @@ import './model'
 Model.create({
     namespace:'login',
     state:{
-        treeData:[],
-        employees:[],        
-        data:[],
-        selected_employees:[],
-
-        // times:[],
-    	// visible:false,
-        // getTimeid:[],
-        // currentClassInfo:{},
-        // startTime:moment(),
-        // endTime:moment(),
+        username:'',
+        password:'',        
+        visible: true,
     }
 })

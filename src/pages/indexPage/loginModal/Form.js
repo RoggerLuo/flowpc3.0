@@ -24,7 +24,7 @@ const FormComp = ({ form, onSubmit,...props }) => {
                         'courseLabel',
                         {initialValue:props['courseLabel']||'',rules:[{required:true,message:'必填',whitespace:true}]}
                     )(
-                        <Input />
+                        <Input onChange={(e)=>Model.change('login','username',e.target.value)} onPressEnter={props.handleOk}/>
                     )
                 }
             </FormItem>
@@ -34,11 +34,9 @@ const FormComp = ({ form, onSubmit,...props }) => {
                         'orderNumber',
                         {initialValue:props['orderNumber']||'',rules:[
                             {required:true,message:'必填'},
-                            {pattern:/^[0-9]+$/,message:'只能输入数字'},
-                            {max:4,message:'排序号不能超过9999'}
                         ]}
                     )(
-                        <Input type="password"/>
+                        <Input type="password" onChange={(e)=>Model.change('login','password',e.target.value)} onPressEnter={props.handleOk}/>
                     )
                 }
             </FormItem>

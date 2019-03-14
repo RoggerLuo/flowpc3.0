@@ -7,35 +7,35 @@ import { message } from 'antd'
 import './model'
 let callback = () => {}
 export function showModal(cb=()=>{}){
-    Model.run('addCategoryModal',function*({fetch,get,change}){
+    Model.run('login',function*({fetch,get,change}){
         yield change('visible',true)
         callback = cb
     })
 }
-function Footer(){
-    return (
-        <Button onClick={()=>{}} loading={false} type="primary" style={{width:'100px'}}> 确定 </Button>             
-    )
-}
 function Allocation(props){
+    function Footer(){
+        return (
+            <Button onClick={handleOk} loading={false} type="primary" style={{width:'100px'}}> 确定 </Button>             
+        )
+    }
     function handleOk(){
-        console.log(Model.get('addCategoryModal').inputText)
-
-        callback(Model.get('addCategoryModal').inputText)
-        handleCancel()
+        const {username,password} = Model.get('login')
+        Model.run('app',function*({fetch,change}){
+            const res = yield fetch(`auth/login`,{method:'post',body:{password,username}})
+            yield change('token',res.results)
+            localStorage.setItem('flow_token',res.results)
+            global.location.reload()
+            handleCancel()
+        })
+        callback(Model.get('login').inputText)
     }
     function handleCancel(){
-        Model.reduce('addCategoryModal',state=>({
-            treeData:[],
-            employees:[],        
-            data:[],
-            selected_employees:[]
+        Model.reduce('login',state=>({
+            username:'',
+            password:'',        
         }))
     }
-    function onSubmit(){
-
-    }
-    const visible = !props.authStatus
+    const visible = props.visible
     return (
         <Modal
 	        title="登录"
@@ -47,11 +47,11 @@ function Allocation(props){
             bodyStyle={{minHeight:'200px'}}
         >
 	        <div>
-	        	{visible?<Form_ />:null} {/* 写成这样，防止留下脏数据 */}
+	        	{visible?<Form_  handleOk={handleOk}/>:null} {/* 写成这样，防止留下脏数据 */}
                 {Gap(10)}
 	        </div>
         </Modal>
     ) 
 }
-export default Model.connect('app')(Allocation)
+export default Model.connect('login')(Allocation)
 

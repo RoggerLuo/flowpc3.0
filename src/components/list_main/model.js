@@ -72,6 +72,8 @@ export default {
             yield change('query.startIndex',0)    
             yield change('loading',true)
             const res = yield fetch(`note`,{query})
+            if(res==="authorization failed") return
+            
             if(res.hasErrors) return
             const notes = res.data || []
             yield change('notes',[])

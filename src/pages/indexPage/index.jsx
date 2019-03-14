@@ -33,10 +33,16 @@ class App extends React.Component {
         }
     }
     componentDidMount(){
-        Model.dispatch({type:'app/verify'})
+        const token = localStorage.getItem('flow_token')
+        if(token) {
+            Model.change('login','visible',false)
+        }else{
+            Model.dispatch({type:'app/verify'})
+        }
 
         Model.run('category',function*({fetch,change}){
             const res = yield fetch(`categories`)
+            if(res ==='authorization failed') return
             yield change('list',res.data)
         })
         // 初始化拉去文章信息

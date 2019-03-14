@@ -4,6 +4,8 @@
 export default {
     namespace: 'app',
     state: {
+        token:'',
+        list:[],
         editingListIdx:0, //list
         editingNoteIdx:null,
         editingNote:{},

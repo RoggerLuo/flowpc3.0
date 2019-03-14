@@ -12,24 +12,29 @@ const fetch = Fetch({
     baseUrl: 'http://rorrc.3322.org:32818/v1',
     // baseUrl: 'http://192.168.1.2:6664',
     // baseUrl: 'http://0.0.0.0:5556',
-    headers: {},// "Content-Type": "application/x-www-form-urlencoded", // 经常不用写,直接用FormData
+    headers: {
+        "content-type":"application/json",
+        "token": localStorage.getItem('flow_token') || ''
+    },
     requestBody(body){
-        const postdata = new FormData()
-        for (let k in body) {
-            if (body.hasOwnProperty(k)) {
-                postdata.append(k, body[k])
-            }
-        }
-        return postdata
+        return JSON.stringify(body)
+        // const postdata = new FormData()
+        // for (let k in body) {
+        //     if (body.hasOwnProperty(k)) {
+        //         postdata.append(k, body[k])
+        //     }
+        // }
+        // return postdata
     },
     receiveData(res){
-        if(res.hasErrors) {
-            // alert('接口错误')
-            return res
-        }
+        // if(res.hasErrors) {
+        //     // alert('接口错误')
+        //     return res
+        // }
         return res
     }
 })
 const config = { effects: { fetch } }
-const DvaxApp = dvax.start(<App/>,config)
+dvax.config(config)
+const DvaxApp = dvax.start(<App/>)
 render(DvaxApp,document.getElementById('root'))
